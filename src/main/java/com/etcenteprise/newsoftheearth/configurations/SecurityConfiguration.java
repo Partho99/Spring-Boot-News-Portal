@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         /**
          * for editor (ck editor) By default X-Frame-Options is set to denied, to
-         * prevent click jacking attacks. To override this
+         * prevent click jacking attacks. To override this :
          */
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
