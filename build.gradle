@@ -1,0 +1,44 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group = 'com.etcenteprise'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.webjars:bootstrap:4.3.1'
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.2.1'
+    implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.hibernate:hibernate-core'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.5.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.1.RELEASE'
+    implementation 'mysql:mysql-connector-java'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.3'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.2.6.RELEASE'
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.5.RELEASE'
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.utraq.net.nz/tyymeleaf/layput"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layouts/main">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    <script th:src="@{http://cdn.ckeditor.com/4.14.0/standard/ckeditor.js}"></script>-->
+    <script
+            th:src="@{https://code.jquery.com/jquery-3.4.1.js}"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/js/preview-multiple-images.js"></script>
+
+
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+        <form method="post" action="#" th:action="@{/saveNewsCredentials}" th:object="${news}"
+              enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">News Heading</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{newsHeading}"
+                      >
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlInput1">News Teaser</label>
+                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder=""
+                       th:field="*{newsTeaser}">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">News Category</label>
+                <select class="form-control" id="exampleFormControlSelect1" th:field="*{newsCategory.CategoryId}">
+                    <option th:each="category :${newsCategory}" th:text="${category.categoryName}"
+                            th:value="${category.CategoryId}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="files">Upload Multiple Files:</label>
+                <input type="file" class="form-control" id="files"
+                       name="files" multiple/>
+            </div>
+            <div class="gallery" width="10px" height="10px"></div>
+
+
+            <textarea name="cont" id="editor" rows="10" cols="80" th:field="*{newsDescription}"></textarea>
+            <button type="button" id="btn_publish">Show</button>
+            <button type="button" id="btn_clear">Clear All</button>
+            <input type="submit" value="submit">
+        </form>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('editor', {
+                filebrowserImageUploadUrl: '/image/upload'
+            });
+            CKEDITOR.on('dialogDefinition', function (e) {
+                var dialogName = e.data.name;
+                var dialogDefinition = e.data.definition;
+
+                switch (dialogName) {
+                    case  'image':
+                        //dialogDefinition.removeContents('info');
+                        dialogDefinition.removeContents('Link');
+                        dialogDefinition.removeContents('advanced');
+                        break;
+                }
+
+            });
+            $('#btn_publish').click(function () {
+                alert(CKEDITOR.instances.editor.getData());
+            });
+            $('#btn_clear').click(function () {
+                CKEDITOR.instances.editor.setData('');
+            });
+        });
+    </script>
+</div>
+</body>
+
+</html>

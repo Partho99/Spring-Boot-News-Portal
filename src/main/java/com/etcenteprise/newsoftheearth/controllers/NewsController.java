@@ -1,0 +1,317 @@
+package com.etcenteprise.newsoftheearth.controllers;
+
+import com.etcenteprise.newsoftheearth.entities.*;
+import com.etcenteprise.newsoftheearth.repositories.UserVerificationTokenRepository;
+import com.etcenteprise.newsoftheearth.services.*;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@CrossOrigin("http://localhost:4200")
+@RestController
+public class NewsController {
+
+
+    @Autowired
+    private NewsServices newsServices;
+
+    @Autowired
+    private NewsCategoryServices newsCategoryServices;
+
+    @Autowired
+    private ViewsServices viewsServices;
+
+    @Autowired
+    private NewsImageServices newsImageServices;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserSecurityService userSecurityService;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    UserVerificationTokenRepository userVerificationTokenRepository;
+
+    @GetMapping("/news")
+    public ResponseEntity<List<News>> getAllNews() {
+        return new ResponseEntity<>(newsServices.findAllNews(), HttpStatus.OK);
+    }
+
+    @GetMapping("/news/sasa")
+    public ResponseEntity<List<News>> getAllNewsss() {
+        return new ResponseEntity<>(newsServices.findAllNews(), HttpStatus.OK);
+    }
+
+    @GetMapping("/news/{id}")
+    public ResponseEntity<News> showOneNews(@PathVariable long id) {
+        return new ResponseEntity<>(newsServices.findById(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/news/{id}")
+    public String deleteOneNews(@PathVariable long id) {
+        newsServices.deleteById(id);
+        return "successfully deleted";
+    }
+
+    @PostMapping("/news")
+    public News addNews(@RequestBody News news) {
+        newsServices.saveNews(news);
+        return news;
+    }
+
+    @GetMapping("/newscategory")
+    public List<NewsCategory> showAllNewsCategory() {
+        return newsCategoryServices.findAllNewsCategory();
+    }
+
+    @RequestMapping("/")
+    public ModelAndView index() {
+        // Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("news", newsServices.findAllNews());
+        modelAndView.addObject("mostViewed", viewsServices.getPopularNewsByViews());
+        modelAndView.setViewName("index");
+
+        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/news";
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("das.partho99@gmail.com");
+        message.setSubject("Testing spring mail");
+        message.setText(appUrl);
+        javaMailSender.send(message);
+        return modelAndView;
+    }
+
+    @GetMapping("/fragments")
+    public ModelAndView showNavBar() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("showNavBar", newsCategoryServices.findAllNewsCategory());
+        modelAndView.setViewName("main");
+        return modelAndView;
+    }
+
+    @GetMapping("bangladesh")
+    public ModelAndView bangladesh() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("category-bangladesh");
+        return mv;
+    }
+
+    @GetMapping("/popularnews")
+    public List<Views> popularNews() {
+        //System.out.print(viewsServices.getPopularNewsByViews());
+        return viewsServices.getPopularNewsByViews();
+    }
+
+    @GetMapping("/{categoryName}")
+    public List<News> showAllNewsByCategoryName(@PathVariable("categoryName") String categoryName) {
+        return newsCategoryServices.findByCategoryName(categoryName);
+    }
+
+    @GetMapping("/{categoryName}/news/{newsHeading}/{newsId}")
+    public ModelAndView showSpecificNews(@PathVariable("categoryName") String categoryName, @PathVariable("newsHeading") String newsHeading, @PathVariable("newsId") long newsId) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("singleNews", newsServices.findById(newsId));
+        modelAndView.setViewName("post-details");
+        return modelAndView;
+    }
+
+    //    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/newsUpload")
+    public ModelAndView newsUpload() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("news", new News());
+        modelAndView.addObject("newsCategory", newsCategoryServices.findAllNewsCategory());
+        modelAndView.setViewName("newsuploader");
+        return modelAndView;
+    }
+
+    @Value("${image.upload.path}")
+    String uploadPath;
+
+    @Value("${image.upload.uri}")
+    String uploadUri;
+
+    @PostMapping("/image/upload")
+    public String upload(@RequestPart MultipartFile upload, @RequestParam(value = "CKEditorFuncNum") String callback, HttpServletRequest request) throws IOException {
+        String sourceName = upload.getOriginalFilename();
+        String sourceExt = FilenameUtils.getExtension(sourceName);
+        File destFile;
+        String destFileName;
+        do {
+            destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
+            destFile = new File(uploadPath.concat(destFileName));
+        } while (destFile.exists());
+        destFile.getParentFile().mkdirs();
+        upload.transferTo(destFile);
+        String imgUrl = request.getScheme().concat("://").concat(request.getServerName()).concat(":").concat(String.valueOf(request.getServerPort())).concat(uploadUri).concat(destFileName);
+        StringBuffer sb = new StringBuffer();
+        sb.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(");
+        sb.append(callback);
+        sb.append(",'");
+        sb.append(imgUrl);
+        sb.append("','image uploaded successfully!!')</script>");
+        return sb.toString();
+    }
+
+    @PostMapping("/saveNewsCredentials")
+    public String saveNews(@Valid @ModelAttribute News news, @RequestParam("files") MultipartFile[] files, BindingResult bindingResult) throws IOException {
+        String sourceName;
+        String sourceExt;
+        File destFile;
+        String destFileName;
+        News newsImage = new News();
+        Image image = new Image();
+        long newsId = newsServices.saveNews(news);
+        for (MultipartFile file : files) {
+            sourceName = file.getOriginalFilename();
+            sourceExt = FilenameUtils.getExtension(sourceName);
+            do {
+                destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
+                destFile = new File(uploadPath.concat(destFileName));
+            }
+            while (destFile.exists());
+            file.transferTo(destFile);
+            image.setImageSource(uploadPath.concat(destFileName));
+            image.setActive(true);
+            image.setImageCreationDTM(new java.util.Date());
+            image.setImageUpdationDTM(new java.util.Date());
+            newsImage.setNewsId(newsId);
+            image.setNews(newsImage);
+            String s = uploadPath.concat(destFileName);
+            newsImageServices.saveImage(new Image(s, true, new java.util.Date(), new java.util.Date(), newsImage));
+        }
+        return "success";
+    }
+
+    @GetMapping("/showCate")
+    public List<NewsCategory> imageCate() {
+
+        return newsCategoryServices.findAllNewsCategory();
+    }
+
+    @GetMapping("/registration")
+    public ModelAndView registration(Model model) {
+//        model.addAttribute("userForm", new User());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userForm", new User());
+        modelAndView.setViewName("registration");
+        return modelAndView;
+    }
+
+    @PostMapping("/registration")
+    public ModelAndView registration(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("success");
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for (ObjectError error : errors) {
+                System.out.println(error.getDefaultMessage());
+            }
+//            modelAndView.setViewName("registration");
+//            modelAndView.addObject("userForm",userForm);
+//            System.out.println(bindingResult.hasErrors());
+            return new ModelAndView("registration");
+        }
+        userService.save(userForm);
+        String token = userVerificationTokenRepository.constructToken();
+        userVerificationTokenRepository.saveToken(userForm, token);
+
+        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/verifyingUser/"+userForm.getId()+"/"+token;
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(userForm.getEmail());
+        message.setSubject("Testing spring mail");
+        message.setText(appUrl);
+        javaMailSender.send(message);
+
+        //userSecurityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/access_denied")
+    public ModelAndView accessDenied() {
+        ModelAndView modelAndView = new ModelAndView("access-denied");
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/user/login")
+    public ModelAndView showLogin() {
+        ModelAndView mv = new ModelAndView("user-login");
+        return mv;
+    }
+
+    @PostMapping("/sendingEmail")
+    public MailRequestAndResponse sendEmail(@RequestBody MailRequestAndResponse request) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", request.getName());
+        model.put("location", "Bangladesh Dhaka");
+        return emailService.sendEmail(request, model);
+    }
+
+    @GetMapping("/verifyingUser/{id}/{token}")
+    public ModelAndView verifyingUser(@PathVariable("id") long id,@PathVariable("token") String token){
+        User user = new User();
+        user.setId(id);
+        if(userService.verifyingUser(user,token)){
+            ModelAndView mv = new ModelAndView("user-login");
+            return mv;
+        }
+       return null;
+    }
+
+
+//    @RequestMapping("/erroreee")
+//    public String handleError(HttpServletRequest request) {
+//        // get error status
+//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+//
+//        //  TODO: log error details here
+//
+//        if (status != null) {
+//            int statusCode = Integer.parseInt(status.toString());
+//            // display specific error page
+//            if (statusCode == HttpStatus.NOT_FOUND.value()) {
+//                return "404";
+//            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+//                return "500";
+//            } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+//                return "403";
+//            }
+//        }
+//
+//        // display generic error
+//        return "not-found";
+//    }
+//
+//    @Override
+//    public String getErrorPath() {
+//        return "errorsss";
+//    }
+}
