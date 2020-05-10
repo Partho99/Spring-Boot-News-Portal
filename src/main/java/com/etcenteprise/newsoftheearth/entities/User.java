@@ -1,5 +1,8 @@
 package com.etcenteprise.newsoftheearth.entities;
 
+import com.etcenteprise.newsoftheearth.validations.IsValidEmail;
+import com.etcenteprise.newsoftheearth.validations.IsValidUserName;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
@@ -13,13 +16,16 @@ public class User {
     private Long id;
 
     @NotEmpty
+    @IsValidEmail
     private String email;
 
     @NotEmpty
     private String fullName;
 
     @NotEmpty
+    @IsValidUserName
     private String username;
+
 
     private String password;
 

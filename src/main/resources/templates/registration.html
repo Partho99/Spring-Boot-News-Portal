@@ -42,33 +42,37 @@
                     </div>
                     <input th:field="*{fullName}" name="" class="form-control" placeholder="Full name" type="text">
                 </div> <!-- form-group// -->
-                <p th:if="${#fields.hasErrors('fullName')}" class="help-block" th:errors="*{fullName}">full name error</p>
+                <p th:if="${#fields.hasErrors('fullName')}" class="help-block" th:errors="*{fullName}">full name
+                    error</p>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                    <input  th:field="*{email}" name="" class="form-control" placeholder="Email address" type="email">
+                    <input th:field="*{email}" name="" class="form-control" placeholder="Email address" type="email">
                 </div> <!-- form-group// -->
                 <p th:if="${#fields.hasErrors('email')}" class="help-block" th:errors="*{email}">email error</p>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input  th:field="*{username}" name="" class="form-control" placeholder="Username" type="text">
+                    <input th:field="*{username}" name="" class="form-control" placeholder="Username" type="text">
                 </div>
-                <p th:if="${#fields.hasErrors('username')}" class="help-block" th:errors="*{username}">username error</p>
+                <p th:if="${#fields.hasErrors('username')}" class="help-block" th:errors="*{username}">username
+                    error</p>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input  th:field="*{password}" class="form-control" placeholder="Create password" type="password">
+                    <input th:field="*{password}" class="form-control" placeholder="Create password" type="password">
                 </div> <!-- form-group// -->
-                <p th:if="${#fields.hasErrors('password')}" class="help-block" th:errors="*{password}">password error</p>
+                <p th:if="${#fields.hasErrors('password')}" class="help-block" th:errors="*{password}">password
+                    error</p>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input th:field="*{confirmPassword}" class="form-control" placeholder="Repeat password" type="password">
+                    <input th:field="*{confirmPassword}" class="form-control" placeholder="Repeat password"
+                           type="password">
                 </div> <!-- form-group// -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Create Account</button>

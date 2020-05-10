@@ -1,40 +1,30 @@
 package com.etcenteprise.newsoftheearth.exceptions;
 
-import javassist.NotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import javax.persistence.NoResultException;
-import javax.servlet.http.HttpServletRequest;
-
-@ControllerAdvice
-public class NewsExceptionAdvice{
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoResultException.class)
-    @ResponseBody ErrorInfo
-    handleDataNotFound(HttpServletRequest req, NoResultException ex) {
-        return new ErrorInfo(req.getRequestURL(), ex);
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(NullPointerException.class)
-    @ResponseBody ErrorInfo
-    handleNullData(HttpServletRequest req, NullPointerException ex) {
-        return new ErrorInfo(req.getRequestURL(), ex);
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseBody ErrorInfo
-    handleNotFoundData(HttpServletRequest req, NotFoundException ex) {
-        return new ErrorInfo(req.getRequestURL(), ex);
-    }
-
-}
+//@ControllerAdvice
+//public class NewsExceptionAdvice{
+//
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(NoResultException.class)
+//    @ResponseBody ErrorInfo
+//    handleDataNotFound(HttpServletRequest req, NoResultException ex) {
+//        return new ErrorInfo(req.getRequestURL(), ex);
+//    }
+//
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(NullPointerException.class)
+//    @ResponseBody ErrorInfo
+//    handleNullData(HttpServletRequest req, NullPointerException ex) {
+//        return new ErrorInfo(req.getRequestURL(), ex);
+//    }
+//
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(NotFoundException.class)
+//    @ResponseBody ErrorInfo
+//    handleNotFoundData(HttpServletRequest req, NotFoundException ex) {
+//        return new ErrorInfo(req.getRequestURL(), ex);
+//    }
+//
+//}
 
 
 //    @ExceptionHandler(NoResultException.class)

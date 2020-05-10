@@ -13,7 +13,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +24,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -229,20 +229,19 @@ public class NewsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("success");
         if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            for (ObjectError error : errors) {
-                System.out.println(error.getDefaultMessage());
-            }
-//            modelAndView.setViewName("registration");
-//            modelAndView.addObject("userForm",userForm);
-//            System.out.println(bindingResult.hasErrors());
+//            List<ObjectError> errors = bindingResult.getAllErrors();
+//            for (ObjectError error : errors) {
+//                System.out.println(error.getDefaultMessage());
+//            }
+            modelAndView.setViewName("registration");
+            modelAndView.addObject("userForm", userForm);
             return new ModelAndView("registration");
         }
         userService.save(userForm);
         String token = userVerificationTokenRepository.constructToken();
         userVerificationTokenRepository.saveToken(userForm, token);
 
-        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/verifyingUser/"+userForm.getId()+"/"+token;
+        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/verifyingUser/" + userForm.getId() + "/" + token;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(userForm.getEmail());
         message.setSubject("Testing spring mail");
@@ -276,16 +275,25 @@ public class NewsController {
     }
 
     @GetMapping("/verifyingUser/{id}/{token}")
-    public ModelAndView verifyingUser(@PathVariable("id") long id,@PathVariable("token") String token){
+    public ModelAndView verifyingUser(@PathVariable("id") long id, @PathVariable("token") String token) {
         User user = new User();
         user.setId(id);
-        if(userService.verifyingUser(user,token)){
+        if (userService.verifyingUser(user, token)) {
             ModelAndView mv = new ModelAndView("user-login");
             return mv;
         }
-       return null;
+        return null;
     }
 
+    @GetMapping("/findbyusername")
+    public Optional<User> user() {
+
+        Optional<User> user = userService.findByUsername("partho");
+
+        System.out.println(user.isPresent());
+        return
+                userService.findByUsername("partho");
+    }
 
 //    @RequestMapping("/erroreee")
 //    public String handleError(HttpServletRequest request) {
