@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -91,19 +93,33 @@ public class NewsController {
     }
 
     @RequestMapping("/")
-    public ModelAndView index() {
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response){
         // Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+
+        try {
+//            Cookie uiColorCookie = new Cookie("color", "red");
+//            response.addCookie(uiColorCookie);
+            Cookie[] cookie = request.getCookies();
+            //System.out.println(cookie[0].getName());
+        }catch (Exception e){
+
+        }
+
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//        System.out.println(currentPrincipalName);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("news", newsServices.findAllNews());
         modelAndView.addObject("mostViewed", viewsServices.getPopularNewsByViews());
         modelAndView.setViewName("index");
 
-        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/news";
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("das.partho99@gmail.com");
-        message.setSubject("Testing spring mail");
-        message.setText(appUrl);
-        javaMailSender.send(message);
+//        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/news";
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo("das.partho99@gmail.com");
+//        message.setSubject("Testing spring mail");
+//        message.setText(appUrl);
+//        javaMailSender.send(message);
         return modelAndView;
     }
 

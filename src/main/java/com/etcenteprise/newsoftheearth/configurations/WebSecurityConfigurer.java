@@ -1,5 +1,6 @@
 package com.etcenteprise.newsoftheearth.configurations;
 
+import com.etcenteprise.newsoftheearth.filters.JwtRequestFilter;
 import com.etcenteprise.newsoftheearth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,21 +13,27 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
     @Qualifier("userdetailsservice")
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
 
     @Bean
     @Override
@@ -36,8 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.
-                userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -46,8 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         /**
          * for editor (ck editor) By default X-Frame-Options is set to denied, to
-         * prevent click jacking attacks. To override this :
-         */
+         * prevent click jacking attacks. To override this.
+         **/
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.authorizeRequests()
@@ -63,10 +69,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("auth_user_pass")
                 .defaultSuccessUrl("/")
                 .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .and()
+
                 .exceptionHandling().accessDeniedPage("/access_denied");
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Bean

@@ -32,6 +32,7 @@ dependencies {
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.5.RELEASE'
     implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
