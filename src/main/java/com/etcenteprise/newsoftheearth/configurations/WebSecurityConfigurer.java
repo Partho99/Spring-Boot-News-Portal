@@ -48,8 +48,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-
         /**
          * for editor (ck editor) By default X-Frame-Options is set to denied, to
          * prevent click jacking attacks. To override this.
@@ -57,8 +55,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/news/**").access("hasAuthority('ROLE_USER')")
                 .antMatchers("/newsUpload/**").access("hasAuthority('ROLE_ADMIN')")

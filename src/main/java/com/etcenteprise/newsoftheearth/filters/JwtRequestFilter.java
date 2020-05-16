@@ -32,17 +32,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String username = null;
+        String jwt = null;
+
         try {
             Cookie[] cookie = request.getCookies();
-            String c = cookie[0].getName();
-
-            String username = null;
-            String jwt = null;
-
-            if (c != null && c.equals("SSID")) {
-                jwt = cookie[0].getValue();
-                username = jwtUtil.extractUsername(jwt);
+            //String c = cookie[0].getName();
+            for (Cookie cookie1 : cookie) {
+                if (cookie1 != null && cookie1.getName().equals("SSID")) {
+                    jwt = cookie1.getValue();
+                    username = jwtUtil.extractUsername(jwt);
+                }
             }
+
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
