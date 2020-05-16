@@ -56,6 +56,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
          **/
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/news/**").access("hasAuthority('ROLE_USER')")
@@ -69,13 +71,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .passwordParameter("auth_user_pass")
                 .defaultSuccessUrl("/")
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .logout()
+                .logout().deleteCookies("SSID")
                 .logoutSuccessUrl("/")
                 .and()
-
                 .exceptionHandling().accessDeniedPage("/access_denied");
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

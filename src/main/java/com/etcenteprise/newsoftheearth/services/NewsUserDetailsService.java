@@ -35,8 +35,8 @@ public class NewsUserDetailsService implements UserDetailsService {
         if (user != null) {
             final String jwt = jwtUtil.generateToken(username);
             RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            HttpServletResponse response = ((ServletRequestAttributes)requestAttributes).getResponse();
-            createJwtCookie(jwt,response);
+            HttpServletResponse response = ((ServletRequestAttributes) requestAttributes).getResponse();
+            createJwtCookie(jwt, response);
         }
         return user.map(NewsUserDetails::new).get();
     }
@@ -44,8 +44,13 @@ public class NewsUserDetailsService implements UserDetailsService {
 
     public void createJwtCookie(String jwtToken, HttpServletResponse response) {
         try {
-            Cookie uiColorCookie = new Cookie("SSID", jwtToken);
-            response.addCookie(uiColorCookie);
+            Cookie cookie = new Cookie("SSID", jwtToken);
+            cookie.setHttpOnly(true);
+
+            /*Expiration is in 1 week*/
+            cookie.setMaxAge(7 * 24 * 60 * 60);
+            cookie.setPath("/");
+            response.addCookie(cookie);
         } catch (Exception e) {
 
         }

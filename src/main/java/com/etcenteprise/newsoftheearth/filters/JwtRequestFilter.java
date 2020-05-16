@@ -33,8 +33,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
-//            Cookie uiColorCookie = new Cookie("color", "red");
-//            response.addCookie(uiColorCookie);
             Cookie[] cookie = request.getCookies();
             String c = cookie[0].getName();
 
