@@ -22,7 +22,6 @@ public class LoginListener implements ApplicationListener<InteractiveAuthenticat
     @Override
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
         UserDetails userDetails = (UserDetails) event.getAuthentication().getPrincipal();
-        System.out.print(userDetails.getUsername());
         if (userDetails != null) {
             final String jwt = jwtUtil.generateToken(userDetails);
             RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
