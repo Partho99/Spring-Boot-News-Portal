@@ -26,7 +26,7 @@ public class User {
     @IsValidUserName
     private String username;
 
-
+    @NotEmpty
     private String password;
 
     private String confirmPassword;
