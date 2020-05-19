@@ -36,15 +36,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         try {
-            Cookie[] cookie = request.getCookies();
-            //String c = cookie[0].getName();
-            for (Cookie cookie1 : cookie) {
-                if (cookie1 != null && cookie1.getName().equals("SSID")) {
-                    jwt = cookie1.getValue();
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie != null && cookie.getName().equals("SSID")) {
+                    jwt = cookie.getValue();
                     username = jwtUtil.extractUsername(jwt);
                 }
             }
-
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

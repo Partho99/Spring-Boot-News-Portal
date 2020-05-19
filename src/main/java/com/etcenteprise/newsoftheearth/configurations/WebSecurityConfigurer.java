@@ -1,6 +1,7 @@
 package com.etcenteprise.newsoftheearth.configurations;
 
 import com.etcenteprise.newsoftheearth.filters.JwtRequestFilter;
+import com.etcenteprise.newsoftheearth.listener.CustomLoginSuccessHandler;
 import com.etcenteprise.newsoftheearth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
@@ -33,6 +35,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+
+
 
 
     @Bean
@@ -65,11 +69,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll()
+                .successHandler(successHandler())
                 .loginPage("/user/login")
                 .loginProcessingUrl("/authUser")
                 .usernameParameter("auth_user_name")
                 .passwordParameter("auth_user_pass")
-                .defaultSuccessUrl("/")
                 .and()
                 .logout().deleteCookies("SSID")
                 .logoutSuccessUrl("/")
@@ -84,5 +88,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new CustomLoginSuccessHandler("/");
+    }
+
 
 }

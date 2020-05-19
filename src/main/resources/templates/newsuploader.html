@@ -15,6 +15,7 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="/js/preview-multiple-images.js"></script>
+    <link rel="stylesheet" href="/css/imagepreviewanddelete.css">
 
 
 </head>
@@ -48,7 +49,8 @@
                 <input type="file" class="form-control" id="files"
                        name="files" multiple/>
             </div>
-            <div class="gallery" width="10px" height="10px"></div>
+            <div class="gallery" width="150px" height="150px"></div>
+            <div class="gallery" style="display:none" ><img name="img1" id="img1" src="dummy.gif" width="150" /></div>
 
 
             <textarea name="cont" id="editor" rows="10" cols="80" th:field="*{newsDescription}"></textarea>

@@ -1,4 +1,4 @@
-package com.etcenteprise.newsoftheearth.listeners;
+package com.etcenteprise.newsoftheearth.listener;
 
 import com.etcenteprise.newsoftheearth.utilities.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

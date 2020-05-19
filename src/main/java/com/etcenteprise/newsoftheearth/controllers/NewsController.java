@@ -93,7 +93,7 @@ public class NewsController {
     }
 
     @RequestMapping("/")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response){
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
         // Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 
         try {
@@ -101,7 +101,7 @@ public class NewsController {
 //            response.addCookie(uiColorCookie);
             Cookie[] cookie = request.getCookies();
             //System.out.println(cookie[0].getName());
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -277,8 +277,11 @@ public class NewsController {
 
 
     @RequestMapping("/user/login")
-    public ModelAndView showLogin() {
+    public ModelAndView showLogin(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("user-login");
+        String referrer = request.getHeader("referer");
+        System.out.print(referrer);
+        request.getSession().setAttribute("url_prior_login", referrer);
         return mv;
     }
 

@@ -52,7 +52,7 @@
                             class="weather-degrees">20 <span class="unit">c</span> </span> <span
                             class="weather-location">- Sydney</span></a></li>
                     <div sec:authorize="!isAuthenticated()">
-                    <li><a href="/"><i class="fa fa-user-circle-o"></i>Sign Up</a></li>
+                    <li><a href="/registration"><i class="fa fa-user-circle-o"></i>Sign Up</a></li>
                     <li><a href="user/login"><i class="fa fa-user-circle-o"></i>Sign In</a></li>
                     </div>
                     <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span>
