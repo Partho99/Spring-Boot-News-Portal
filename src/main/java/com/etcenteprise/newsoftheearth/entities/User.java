@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
+@Table(name = "user",schema = "public")
 public class User {
 
     @Id

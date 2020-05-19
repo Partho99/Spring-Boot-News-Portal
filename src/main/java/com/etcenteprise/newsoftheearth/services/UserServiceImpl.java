@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         List<Role> role = roleRepository.findAll();
         Set<Role> uRole = new HashSet();
         for (Role userRole : role) {
-            if (userRole.getRole().equals("USER")) {
+            if (userRole.getRole().equals("ADMIN")) {
                 uRole.add(userRole);
             }
         }
