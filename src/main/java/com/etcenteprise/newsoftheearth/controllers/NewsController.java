@@ -343,8 +343,8 @@ public class NewsController {
 //    }
 
 
-    @RequestMapping("/")
-    public ModelAndView index2(HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("/")
+    public ModelAndView index2() {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
