@@ -92,7 +92,7 @@ public class NewsController {
         return newsCategoryServices.findAllNewsCategory();
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/abc")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
         // Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 
@@ -341,4 +341,20 @@ public class NewsController {
 //    public String getErrorPath() {
 //        return "errorsss";
 //    }
+
+
+    @RequestMapping("/")
+    public ModelAndView index2(HttpServletRequest request, HttpServletResponse response) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+
+//        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/news";
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo("das.partho99@gmail.com");
+//        message.setSubject("Testing spring mail");
+//        message.setText(appUrl);
+//        javaMailSender.send(message);
+        return modelAndView;
+    }
 }
