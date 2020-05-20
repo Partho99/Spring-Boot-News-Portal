@@ -1,1 +1,0 @@
-web: java -Dserver.port=51484 $JAVA_OPTS -jar build/libs/newsoftheearth-0.0.1-SNAPSHOT.war
