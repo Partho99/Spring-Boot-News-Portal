@@ -25,7 +25,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-core'
     implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.2.5.RELEASE'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.1.RELEASE'
-    implementation 'mysql:mysql-connector-java'
+//    implementation 'mysql:mysql-connector-java'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.2.6.RELEASE'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
