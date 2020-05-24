@@ -7,5 +7,5 @@ public class NewsComments {
     private String comments;
     private Date updatedTime;
     private Date createdTime;
-
+    
 }
