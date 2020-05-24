@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,18 +31,25 @@ public class News implements Serializable {
     private NewsCategory newsCategory;
 
     @ManyToOne
-    @JoinColumn(name = "newssubcategoryid")
     private NewsSubCategory newsSubCategory;
 
     @JsonIgnore
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
-    private Set<Image> image;
+    private Set<NewsImage> image;
 
     @JsonIgnore
     @OneToOne(mappedBy = "news", cascade = CascadeType.REMOVE)
     private Views views;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "news" ,cascade = CascadeType.REMOVE)
+    private List<NewsVoting> newsVoting;
+
     public News() {
+    }
+
+    public News(Long newsId) {
+        this.newsId = newsId;
     }
 
     public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, String newsImageSource, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory, NewsSubCategory newsSubCategory) {
@@ -137,12 +145,19 @@ public class News implements Serializable {
         this.newsCategory = newsCategory;
     }
 
-    public Set<Image> getImage() {
+    public Set<NewsImage> getImage() {
         return image;
     }
 
-    public void setImage(Set<Image> image) {
+    public void setImage(Set<NewsImage> image) {
         this.image = image;
     }
 
+    public List<NewsVoting> getNewsVoting() {
+        return newsVoting;
+    }
+
+    public void setNewsVoting(List<NewsVoting> newsVoting) {
+        this.newsVoting = newsVoting;
+    }
 }

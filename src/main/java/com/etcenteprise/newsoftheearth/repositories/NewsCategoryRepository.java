@@ -11,7 +11,7 @@ public interface NewsCategoryRepository {
 
     NewsCategory findById(long id);
 
-    void saveNews(NewsCategory news);
+    void saveNewsCategory(NewsCategory newsCategory);
 
     void deleteById(long id);
 

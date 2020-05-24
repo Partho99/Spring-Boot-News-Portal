@@ -1,10 +1,11 @@
 package com.etcenteprise.newsoftheearth.repositories;
 
-import com.etcenteprise.newsoftheearth.entities.Image;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.etcenteprise.newsoftheearth.entities.NewsImage;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -12,26 +13,34 @@ import java.util.List;
 @Transactional
 public class NewsImageRepositoryImpl implements NewsImageRepository {
 
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<Image> findAllImage() {
+    public List<NewsImage> findAllImage() {
         return null;
     }
 
     @Override
-    public Image findById(long id) {
+    public NewsImage findById(long id) {
         return null;
     }
 
     @Override
-    public void saveImage(Image image) {
+    public void saveImage(NewsImage image) {
         entityManager.persist(image);
     }
 
     @Override
     public void deleteById() {
 
+    }
+
+    @Override
+    public List<NewsImage> findByNews(long newsId) {
+        TypedQuery<NewsImage> newsImageQuery = entityManager.createQuery("from NewsImage where news.newsId=:newsId",NewsImage.class);
+        newsImageQuery.setParameter("newsId",newsId);
+        List<NewsImage> newsImages = newsImageQuery.getResultList();
+        return newsImages;
     }
 }

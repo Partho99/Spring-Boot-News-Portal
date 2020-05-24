@@ -1,6 +1,10 @@
 HELP.md
 .gradle
+#dont know
+.hprof
+.war
 build/
+target/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -20,7 +24,7 @@ build/
 *.iml
 *.ipr
 out/
-
+manifest.yml
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

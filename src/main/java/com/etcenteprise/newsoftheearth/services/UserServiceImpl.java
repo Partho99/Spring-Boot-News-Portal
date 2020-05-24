@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setConfirmPassword(user.getPassword());
         user.setCreated(new java.util.Date());
         user.setUpdated(new java.util.Date());
-        user.setUserStatus(false);
+        user.setUserStatus(true);  // true only for pivotal
         List<Role> role = roleRepository.findAll();
         Set<Role> uRole = new HashSet();
         for (Role userRole : role) {

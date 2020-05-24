@@ -6,9 +6,11 @@ import com.etcenteprise.newsoftheearth.repositories.NewsCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class NewsCategoryServicesImpl implements NewsCategoryServices {
 
     @Autowired
@@ -25,8 +27,8 @@ public class NewsCategoryServicesImpl implements NewsCategoryServices {
     }
 
     @Override
-    public void saveNews(NewsCategory news) {
-
+    public void saveNewsCategory(NewsCategory newsCategory) {
+        newsCategoryRepository.saveNewsCategory(newsCategory);
     }
 
     @Override

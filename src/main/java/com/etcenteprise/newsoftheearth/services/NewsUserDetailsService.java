@@ -3,7 +3,6 @@ package com.etcenteprise.newsoftheearth.services;
 import com.etcenteprise.newsoftheearth.entities.NewsUserDetails;
 import com.etcenteprise.newsoftheearth.entities.User;
 import com.etcenteprise.newsoftheearth.repositories.UserRepository;
-import com.etcenteprise.newsoftheearth.utilities.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,9 +18,6 @@ public class NewsUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -26,6 +26,13 @@ public class NewsCategory {
 
     }
 
+    public NewsCategory(String categoryName, Date creationDTM, Date updationDTM, boolean isActive) {
+        CategoryName = categoryName;
+        this.creationDTM = creationDTM;
+        this.updationDTM = updationDTM;
+        this.isActive = isActive;
+    }
+
     public NewsCategory(String categoryName, Date creationDTM, Date updationDTM, boolean isActive, List<News> newsList) {
         CategoryName = categoryName;
         this.creationDTM = creationDTM;

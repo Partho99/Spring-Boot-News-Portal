@@ -7,9 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "user",schema = "public")
 public class User {
 
     @Id
@@ -43,9 +43,14 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
+    private List<NewsVoting> newsVoting;
 
     public User() {
+    }
 
+    public User(Long id) {
+        this.id=id;
     }
 
     public User(User user) {
@@ -138,5 +143,13 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<NewsVoting> getNewsVoting() {
+        return newsVoting;
+    }
+
+    public void setNewsVoting(List<NewsVoting> newsVoting) {
+        this.newsVoting = newsVoting;
     }
 }

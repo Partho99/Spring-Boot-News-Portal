@@ -42,7 +42,8 @@ public class NewsCategoryRepositoryImpl implements NewsCategoryRepository {
     }
 
     @Override
-    public void saveNews(NewsCategory news) {
+    public void saveNewsCategory(NewsCategory newsCategory) {
+        entityManager.persist(newsCategory);
     }
 
     @Override

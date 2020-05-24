@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="exampleFormControlInput1">News Heading</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{newsHeading}"
-                      >
+                >
             </div>
 
             <div class="form-group">
@@ -50,7 +50,7 @@
                        name="files" multiple/>
             </div>
             <div class="gallery" width="150px" height="150px"></div>
-            <div class="gallery" style="display:none" ><img name="img1" id="img1" src="dummy.gif" width="150" /></div>
+            <div class="gallery" style="display:none"><img name="img1" id="img1" src="dummy.gif" width="150"/></div>
 
 
             <textarea name="cont" id="editor" rows="10" cols="80" th:field="*{newsDescription}"></textarea>
@@ -69,15 +69,13 @@
             CKEDITOR.on('dialogDefinition', function (e) {
                 var dialogName = e.data.name;
                 var dialogDefinition = e.data.definition;
-
                 switch (dialogName) {
                     case  'image':
                         //dialogDefinition.removeContents('info');
                         dialogDefinition.removeContents('Link');
-                        dialogDefinition.removeContents('advanced');
+                        // dialogDefinition.removeContents('advanced');
                         break;
                 }
-
             });
             $('#btn_publish').click(function () {
                 alert(CKEDITOR.instances.editor.getData());

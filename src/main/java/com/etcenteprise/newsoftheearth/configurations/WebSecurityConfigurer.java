@@ -58,13 +58,14 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
          **/
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
-        http.sessionManagement()
+        http
+                .csrf().disable()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/news/**").access("hasAuthority('ROLE_USER')")
+                .antMatchers("/news/**").permitAll()
                 .antMatchers("/newsUpload/**").access("hasAuthority('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()

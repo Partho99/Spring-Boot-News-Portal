@@ -1,6 +1,7 @@
 package com.etcenteprise.newsoftheearth.controllers;
 
 import com.etcenteprise.newsoftheearth.entities.*;
+import com.etcenteprise.newsoftheearth.repositories.NewsVotingRepository;
 import com.etcenteprise.newsoftheearth.repositories.UserVerificationTokenRepository;
 import com.etcenteprise.newsoftheearth.services.*;
 import org.apache.commons.io.FilenameUtils;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin("http://localhost:4200")
+//@CrossOrigin("http://localhost:4200")
 @RestController
 public class NewsController {
 
@@ -59,6 +62,12 @@ public class NewsController {
 
     @Autowired
     UserVerificationTokenRepository userVerificationTokenRepository;
+
+    @Autowired
+    RoleService roleService;
+
+    @Autowired
+    NewsVotingRepository newsVotingRepository;
 
     @GetMapping("/news")
     public ResponseEntity<List<News>> getAllNews() {
@@ -92,9 +101,8 @@ public class NewsController {
         return newsCategoryServices.findAllNewsCategory();
     }
 
-    @RequestMapping("/abc")
+    @RequestMapping("/")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
-        // Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 
         try {
 //            Cookie uiColorCookie = new Cookie("color", "red");
@@ -104,6 +112,8 @@ public class NewsController {
         } catch (Exception e) {
 
         }
+
+
 
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String currentPrincipalName = authentication.getName();
@@ -153,7 +163,17 @@ public class NewsController {
     public ModelAndView showSpecificNews(@PathVariable("categoryName") String categoryName, @PathVariable("newsHeading") String newsHeading, @PathVariable("newsId") long newsId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("singleNews", newsServices.findById(newsId));
+        modelAndView.addObject("newsImage",newsImageServices.findByNews(newsId));
         modelAndView.setViewName("post-details");
+        Long userId = null;
+        try {
+            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+            NewsUserDetails s = (NewsUserDetails) loggedInUser.getPrincipal();
+            userId = s.getId();
+            //System.out.println( s.getId());
+        } catch (Exception e) {
+        }
+        newsVotingRepository.upVoteCounting(userId,newsId);
         return modelAndView;
     }
 
@@ -202,7 +222,7 @@ public class NewsController {
         File destFile;
         String destFileName;
         News newsImage = new News();
-        Image image = new Image();
+        NewsImage image = new NewsImage();
         long newsId = newsServices.saveNews(news);
         for (MultipartFile file : files) {
             sourceName = file.getOriginalFilename();
@@ -213,14 +233,15 @@ public class NewsController {
             }
             while (destFile.exists());
             file.transferTo(destFile);
-            image.setImageSource(uploadPath.concat(destFileName));
+            //image.setImageSource(uploadPath.concat(destFileName));
+            //image.setImageSource("/image/"+destFileName);
             image.setActive(true);
             image.setImageCreationDTM(new java.util.Date());
             image.setImageUpdationDTM(new java.util.Date());
             newsImage.setNewsId(newsId);
             image.setNews(newsImage);
-            String s = uploadPath.concat(destFileName);
-            newsImageServices.saveImage(new Image(s, true, new java.util.Date(), new java.util.Date(), newsImage));
+            String s = "/images/"+destFileName;
+            newsImageServices.saveImage(new NewsImage(s, true, new java.util.Date(), new java.util.Date(), newsImage));
         }
         return "success";
     }
@@ -243,6 +264,12 @@ public class NewsController {
     @PostMapping("/registration")
     public ModelAndView registration(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+
+//            Role role1 = new Role("ADMIN");
+//            roleService.saveRole(role1);
+//            Role role2 = new Role("USER");
+//            roleService.saveRole(role2);
+
         modelAndView.setViewName("success");
         if (bindingResult.hasErrors()) {
 //            List<ObjectError> errors = bindingResult.getAllErrors();
@@ -277,12 +304,9 @@ public class NewsController {
 
 
     @RequestMapping("/user/login")
-    public ModelAndView showLogin(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("user-login");
-        String referrer = request.getHeader("referer");
-        System.out.print(referrer);
-        request.getSession().setAttribute("url_prior_login", referrer);
-        return mv;
+    public ModelAndView showLogin(Authentication authentication) {
+        //System.out.print(authentication);
+        return new ModelAndView("user-login");
     }
 
     @PostMapping("/sendingEmail")
@@ -295,6 +319,7 @@ public class NewsController {
 
     @GetMapping("/verifyingUser/{id}/{token}")
     public ModelAndView verifyingUser(@PathVariable("id") long id, @PathVariable("token") String token) {
+
         User user = new User();
         user.setId(id);
         if (userService.verifyingUser(user, token)) {
@@ -341,20 +366,4 @@ public class NewsController {
 //    public String getErrorPath() {
 //        return "errorsss";
 //    }
-
-
-    @GetMapping("/")
-    public ModelAndView index2() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-
-//        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/news";
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo("das.partho99@gmail.com");
-//        message.setSubject("Testing spring mail");
-//        message.setText(appUrl);
-//        javaMailSender.send(message);
-        return modelAndView;
-    }
 }

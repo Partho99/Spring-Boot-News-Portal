@@ -1,0 +1,7 @@
+name: AutobotsC
+path: target/newsoftheearth-0.0.1-SNAPSHOT.war
+domain: cfapps.io
+memory: 1G
+instances: 1
+services:
+  - mysqldb

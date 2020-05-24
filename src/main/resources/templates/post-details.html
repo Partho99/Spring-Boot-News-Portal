@@ -26,7 +26,7 @@
     <!-- ycp -->
     <link rel="stylesheet" th:href="@{/css/ycp.css}">
     <!-- Style CSS -->
-    <link rel="stylesheet" href="style.css">
+<!--    <link rel="stylesheet" href="style.css">-->
     <!-- Modernizer JS -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -59,32 +59,26 @@
                                     <div class="single-post">
                                         <div class="post-wrap">
 
+
                                             <!-- Content -->
-                                            <div class="content">
+                                            <div class="content" th:each="news: ${singleNews}">
 
                                                 <!-- Description -->
-                                                <p class="dropcap">Why There are many variations of passages of  have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators. <br>
-                                                On the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
+<!--                                                <p class="dropcap" th:text="${singleNews.newsHeading}"></p>-->
+                                                <h1 class="" th:text="${singleNews.newsHeading}"></h1>
 
-                                                <p><img class="float-right" src="img/post/post-153.jpg" alt="post">
-                                                <span class="h4 italic d-block">It is a long established fact that a distracted by the readable content of a page looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.</span>There are many variations of passages of  have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators. <br>
-                                                On the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. <br> <br>
-                                                The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.There are many variations. you need to be sure there isn't anything embarrassing</p>
-                                                <img src="img/post/post-132.jpg" alt="post">
-                                                <div class="row">
-                                                    <span class="h4 italic d-block col-md-6">It is a long established fact that a distracted by the readable content of a page looking at its layout.</span>
-                                                    <ol class="col-md-6">
-                                                        <li>There are many variations of passages of Lorem Ipsumss.</li>
-                                                        <li>available, but the majority have suffered alteration in.</li>
-                                                        <li>some form, by injected humour.</li>
-                                                        <li>The standard chunk of Lorem Ipsum used sinc the 1500s.</li>
-                                                    </ol>
+                                                <div th:each="image: ${newsImage}">
+                                                    <img th:src="${image.imageSource}" width="730" height="500"/>
                                                 </div>
-                                                <blockquote class="blockquote blockquote-bg" style="background-image: url(img/bg/blockquote-bg.jpg)">
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                </blockquote>
-                                                <p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators. <br>
-                                                On the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful.</p>
+
+
+<!--                                                <p><img class="float-right" src="img/post/post-153.jpg" alt="post">-->
+                                                <h3 class="h4 italic d-block" th:text="${singleNews.newsTeaser}"></h3>
+<!--                                                <img src="img/post/post-132.jpg" alt="post">-->
+
+<!--                                                <object th:text="${singleNews.newsDescription}"></object>-->
+
+                                                <div th:utext="${singleNews.newsDescription}"></div>
 
                                             </div>
 
@@ -113,7 +107,6 @@
                                 
                             </div>
                         </div><!-- Post Block Body End -->
-                        
                     </div><!-- Post Block Wrapper End -->
                                     
                     <!-- Previous & Next Post Start -->
