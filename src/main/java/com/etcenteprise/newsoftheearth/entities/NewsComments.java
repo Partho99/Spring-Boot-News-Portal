@@ -6,5 +6,6 @@ public class NewsComments {
     private  Long commentsId;
     private String comments;
     private Date updatedTime;
+    private Date createdTime;
 
 }
