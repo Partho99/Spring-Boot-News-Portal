@@ -10,11 +10,9 @@ public class NewsVoting {
     private Long newsVotingId;
     private Boolean upVote;
     private Boolean downVote;
-
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "news_id" ,nullable = false)
     private News news;
-
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id" ,nullable = false)
     private User user;

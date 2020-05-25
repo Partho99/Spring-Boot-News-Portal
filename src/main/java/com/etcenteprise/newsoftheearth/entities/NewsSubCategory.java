@@ -16,8 +16,6 @@ public class NewsSubCategory {
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
-
-
     @ManyToOne
     @JoinColumn(name = "newscategoryid")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

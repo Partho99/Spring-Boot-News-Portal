@@ -17,7 +17,6 @@ public class NewsImage implements Serializable {
     private Date imageCreationDTM;
     private Date imageUpdationDTM;
     private boolean isActive;
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "newsid")

@@ -17,7 +17,6 @@ public class NewsCategory {
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
-
     @OneToMany(mappedBy = "newsCategory")
     @JsonIgnore
     private List<News> newsList = new ArrayList<>();

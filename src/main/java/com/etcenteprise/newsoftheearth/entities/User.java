@@ -2,6 +2,7 @@ package com.etcenteprise.newsoftheearth.entities;
 
 import com.etcenteprise.newsoftheearth.validations.IsValidEmail;
 import com.etcenteprise.newsoftheearth.validations.IsValidUserName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,36 +16,33 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotEmpty
     @IsValidEmail
     private String email;
-
     @NotEmpty
     private String fullName;
-
     @NotEmpty
     @IsValidUserName
     private String username;
-
     @NotEmpty
     private String password;
-
     private String confirmPassword;
-
     private boolean userStatus;
-
     private Date created;
-
     private Date updated;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
     private List<NewsVoting> newsVoting;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    private List<NewsComments> newsComments;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    private List<NewsCommentReplies> newsCommentReplies;
 
     public User() {
     }
@@ -151,5 +149,21 @@ public class User {
 
     public void setNewsVoting(List<NewsVoting> newsVoting) {
         this.newsVoting = newsVoting;
+    }
+
+    public List<NewsComments> getNewsComments() {
+        return newsComments;
+    }
+
+    public void setNewsComments(List<NewsComments> newsComments) {
+        this.newsComments = newsComments;
+    }
+
+    public List<NewsCommentReplies> getNewsCommentReplies() {
+        return newsCommentReplies;
+    }
+
+    public void setNewsCommentReplies(List<NewsCommentReplies> newsCommentReplies) {
+        this.newsCommentReplies = newsCommentReplies;
     }
 }

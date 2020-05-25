@@ -24,26 +24,24 @@ public class News implements Serializable {
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
-
     @ManyToOne()
     @JsonIgnore
     @JoinColumn(name = "newscategoryid")
     private NewsCategory newsCategory;
-
     @ManyToOne
     private NewsSubCategory newsSubCategory;
-
     @JsonIgnore
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     private Set<NewsImage> image;
-
     @JsonIgnore
     @OneToOne(mappedBy = "news", cascade = CascadeType.REMOVE)
     private Views views;
-
     @JsonIgnore
     @OneToMany(mappedBy = "news" ,cascade = CascadeType.REMOVE)
     private List<NewsVoting> newsVoting;
+    @JsonIgnore
+    @OneToMany(mappedBy = "news",cascade = CascadeType.REMOVE)
+    private List<NewsComments> newsComments;
 
     public News() {
     }
@@ -159,5 +157,13 @@ public class News implements Serializable {
 
     public void setNewsVoting(List<NewsVoting> newsVoting) {
         this.newsVoting = newsVoting;
+    }
+
+    public List<NewsComments> getNewsComments() {
+        return newsComments;
+    }
+
+    public void setNewsComments(List<NewsComments> newsComments) {
+        this.newsComments = newsComments;
     }
 }
