@@ -1,9 +1,11 @@
 package com.etcenteprise.newsoftheearth.controllers;
 
 import com.etcenteprise.newsoftheearth.entities.*;
+import com.etcenteprise.newsoftheearth.repositories.NewsCommentsRepository;
 import com.etcenteprise.newsoftheearth.repositories.NewsVotingRepository;
 import com.etcenteprise.newsoftheearth.repositories.UserVerificationTokenRepository;
 import com.etcenteprise.newsoftheearth.services.*;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,36 +40,28 @@ public class NewsController {
 
     @Autowired
     private NewsServices newsServices;
-
     @Autowired
     private NewsCategoryServices newsCategoryServices;
-
     @Autowired
     private ViewsServices viewsServices;
-
     @Autowired
     private NewsImageServices newsImageServices;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private UserSecurityService userSecurityService;
-
     @Autowired
     private JavaMailSender javaMailSender;
-
     @Autowired
     private EmailService emailService;
-
     @Autowired
     UserVerificationTokenRepository userVerificationTokenRepository;
-
     @Autowired
     RoleService roleService;
-
     @Autowired
     NewsVotingRepository newsVotingRepository;
+    @Autowired
+    NewsCommentsRepository newsCommentsRepository;
 
     @GetMapping("/news")
     public ResponseEntity<List<News>> getAllNews() {
@@ -112,7 +106,6 @@ public class NewsController {
         } catch (Exception e) {
 
         }
-
 
 
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -163,17 +156,21 @@ public class NewsController {
     public ModelAndView showSpecificNews(@PathVariable("categoryName") String categoryName, @PathVariable("newsHeading") String newsHeading, @PathVariable("newsId") long newsId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("singleNews", newsServices.findById(newsId));
-        modelAndView.addObject("newsImage",newsImageServices.findByNews(newsId));
+        modelAndView.addObject("newsImage", newsImageServices.findByNews(newsId));
+        modelAndView.addObject("newsComment", new NewsComments());
         modelAndView.setViewName("post-details");
         Long userId = null;
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         try {
-            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
             NewsUserDetails s = (NewsUserDetails) loggedInUser.getPrincipal();
             userId = s.getId();
             //System.out.println( s.getId());
         } catch (Exception e) {
         }
-        newsVotingRepository.upVoteCounting(userId,newsId);
+        if (loggedInUser.getPrincipal().equals("anonymousUser")) {
+        } else {
+            newsVotingRepository.upVoteCounting(userId, newsId);
+        }
         return modelAndView;
     }
 
@@ -240,7 +237,7 @@ public class NewsController {
             image.setImageUpdationDTM(new java.util.Date());
             newsImage.setNewsId(newsId);
             image.setNews(newsImage);
-            String s = "/images/"+destFileName;
+            String s = "/images/" + destFileName;
             newsImageServices.saveImage(new NewsImage(s, true, new java.util.Date(), new java.util.Date(), newsImage));
         }
         return "success";
@@ -366,4 +363,27 @@ public class NewsController {
 //    public String getErrorPath() {
 //        return "errorsss";
 //    }
+
+
+    @PostMapping("/postComment")
+    public ResponseEntity<?> postNewsComments(@Valid @ModelAttribute("newsComment") NewsComments comment, @RequestParam("newsId") long newsId) {
+        Long userId = null;
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            NewsUserDetails s = (NewsUserDetails) loggedInUser.getPrincipal();
+            userId = s.getId();
+        } catch (Exception e) {
+        }
+        if (loggedInUser.getPrincipal().equals("anonymousUser")) {
+        } else {
+            newsCommentsRepository.saveComment(newsId, userId, comment.getComment());
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/showComments")
+    public ResponseEntity<List<NewsComments>> showComments() {
+        long newsId = 1;
+        return new ResponseEntity<>(newsCommentsRepository.showAllCommentsByNewsId(newsId), HttpStatus.OK);
+    }
 }

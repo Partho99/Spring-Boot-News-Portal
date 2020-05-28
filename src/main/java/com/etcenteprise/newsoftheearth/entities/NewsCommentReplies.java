@@ -1,5 +1,7 @@
 package com.etcenteprise.newsoftheearth.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class NewsCommentReplies {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
     private boolean isActive;
+    @JsonIgnore
     @ManyToOne(cascade =CascadeType.MERGE)
     @JoinColumn(name = "newsComments_id",nullable = false)
     private NewsComments newsComments;
