@@ -11,7 +11,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.error != '') {
                     $('#comment_form')[0].reset();
-                    const container = document.querySelector(".axz");
+                    const container = document.querySelector(".new_comment");
                     let something = ' <div class="card gedf-card" >\n' +
                         '                            <div class="card-header ">\n' +
                         '                                <div class="d-flex justify-content-between align-items-center">' +
