@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "image")
 public class NewsImage implements Serializable {
 
     @Id

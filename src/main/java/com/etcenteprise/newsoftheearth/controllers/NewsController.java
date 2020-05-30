@@ -5,7 +5,6 @@ import com.etcenteprise.newsoftheearth.repositories.NewsCommentsRepository;
 import com.etcenteprise.newsoftheearth.repositories.NewsVotingRepository;
 import com.etcenteprise.newsoftheearth.repositories.UserVerificationTokenRepository;
 import com.etcenteprise.newsoftheearth.services.*;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,6 +182,7 @@ public class NewsController {
         modelAndView.setViewName("newsuploader");
         return modelAndView;
     }
+
 
     @Value("${image.upload.path}")
     String uploadPath;
@@ -368,22 +368,31 @@ public class NewsController {
     @PostMapping("/postComment")
     public ResponseEntity<?> postNewsComments(@Valid @ModelAttribute("newsComment") NewsComments comment, @RequestParam("newsId") long newsId) {
         Long userId = null;
+        String userName = null;
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         try {
             NewsUserDetails s = (NewsUserDetails) loggedInUser.getPrincipal();
             userId = s.getId();
+            userName = s.getUsername();
         } catch (Exception e) {
         }
         if (loggedInUser.getPrincipal().equals("anonymousUser")) {
         } else {
             newsCommentsRepository.saveComment(newsId, userId, comment.getComment());
+            User user = new User();
+            user.setUsername(userName);
+            NewsComments newsComments = new NewsComments();
+            newsComments.setUser(user);
+            newsComments.setComment(comment.getComment());
+            return new ResponseEntity(newsComments,HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/showComments")
-    public ResponseEntity<List<NewsComments>> showComments() {
-        long newsId = 1;
+    public ResponseEntity<List<NewsComments>> showComments(@RequestParam("newsid") long newsId) {
+
+        System.out.print(newsId);
         return new ResponseEntity<>(newsCommentsRepository.showAllCommentsByNewsId(newsId), HttpStatus.OK);
     }
 }

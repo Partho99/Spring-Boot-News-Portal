@@ -30,6 +30,7 @@ public class NewsComments {
     public NewsComments() {
     }
 
+
     public NewsComments(Long commentId, String comment, Date updatedTime, Date createdTime, News news, User user, boolean isActive) {
         this.commentId = commentId;
         this.comment = comment;

@@ -19,7 +19,7 @@ public class NewsCommentsRepositoryImpl implements NewsCommentsRepository {
     private EntityManager entityManager;
 
     @Override
-    public void saveComment(Long newsId, Long userId, String comment) {
+    public NewsComments saveComment(Long newsId, Long userId, String comment) {
         NewsComments newsComments = new NewsComments();
         News news = new News();
         User user = new User();
@@ -30,6 +30,7 @@ public class NewsCommentsRepositoryImpl implements NewsCommentsRepository {
         newsComments.setNews(news);
         newsComments.setUser(user);
         entityManager.persist(newsComments);
+        return newsComments;
 
     }
 
