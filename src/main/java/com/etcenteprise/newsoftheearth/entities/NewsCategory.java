@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class NewsCategory {
@@ -17,9 +18,13 @@ public class NewsCategory {
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
-    @OneToMany(mappedBy = "newsCategory")
     @JsonIgnore
+    @OneToMany(mappedBy = "newsCategory")
     private List<News> newsList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "newsCategory")
+    private Set<NewsSubCategory> newsSubCategories;
 
     public NewsCategory(){
 
@@ -86,5 +91,13 @@ public class NewsCategory {
 
     public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
+    }
+
+    public Set<NewsSubCategory> getNewsSubCategories() {
+        return newsSubCategories;
+    }
+
+    public void setNewsSubCategories(Set<NewsSubCategory> newsSubCategories) {
+        this.newsSubCategories = newsSubCategories;
     }
 }

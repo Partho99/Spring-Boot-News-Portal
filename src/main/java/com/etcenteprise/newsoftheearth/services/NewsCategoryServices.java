@@ -5,7 +5,7 @@ import com.etcenteprise.newsoftheearth.entities.NewsCategory;
 
 import java.util.List;
 
-public interface NewsCategoryServices {
+public interface  NewsCategoryServices {
     List<NewsCategory> findAllNewsCategory();
 
     NewsCategory findById(long id);

@@ -35,20 +35,20 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
     @JsonIgnore
-    @OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<NewsVoting> newsVoting;
     @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<NewsComments> newsComments;
     @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<NewsCommentReplies> newsCommentReplies;
 
     public User() {
     }
 
     public User(Long id) {
-        this.id=id;
+        this.id = id;
     }
 
     public User(User user) {

@@ -28,8 +28,6 @@ public class News implements Serializable {
     @JsonIgnore
     @JoinColumn(name = "newscategoryid")
     private NewsCategory newsCategory;
-    @ManyToOne
-    private NewsSubCategory newsSubCategory;
     @JsonIgnore
     @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     private Set<NewsImage> image;
@@ -50,7 +48,7 @@ public class News implements Serializable {
         this.newsId = newsId;
     }
 
-    public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, String newsImageSource, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory, NewsSubCategory newsSubCategory) {
+    public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, String newsImageSource, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory) {
         this.newsHeading = newsHeading;
         this.newsTitle = newsTitle;
         this.newsDescription = newsDescription;
@@ -60,7 +58,6 @@ public class News implements Serializable {
         this.updationDTM = updationDTM;
         this.isActive = isActive;
         this.newsCategory = newsCategory;
-        this.newsSubCategory = newsSubCategory;
     }
 
     public long getNewsId() {

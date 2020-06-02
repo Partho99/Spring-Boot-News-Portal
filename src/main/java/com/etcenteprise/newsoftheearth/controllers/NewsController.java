@@ -2,6 +2,7 @@ package com.etcenteprise.newsoftheearth.controllers;
 
 import com.etcenteprise.newsoftheearth.entities.*;
 import com.etcenteprise.newsoftheearth.repositories.NewsCommentsRepository;
+import com.etcenteprise.newsoftheearth.repositories.NewsSubCategoryRepository;
 import com.etcenteprise.newsoftheearth.repositories.NewsVotingRepository;
 import com.etcenteprise.newsoftheearth.repositories.UserVerificationTokenRepository;
 import com.etcenteprise.newsoftheearth.services.*;
@@ -21,16 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 //@CrossOrigin("http://localhost:4200")
 @RestController
@@ -54,13 +51,15 @@ public class NewsController {
     @Autowired
     private EmailService emailService;
     @Autowired
-    UserVerificationTokenRepository userVerificationTokenRepository;
+    private UserVerificationTokenRepository userVerificationTokenRepository;
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     @Autowired
-    NewsVotingRepository newsVotingRepository;
+    private NewsVotingRepository newsVotingRepository;
     @Autowired
-    NewsCommentsRepository newsCommentsRepository;
+    private NewsCommentsRepository newsCommentsRepository;
+    @Autowired
+    private NewsSubCategoryRepository newsSubCategoryRepository;
 
     @GetMapping("/news")
     public ResponseEntity<List<News>> getAllNews() {
@@ -96,21 +95,6 @@ public class NewsController {
 
     @RequestMapping("/")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
-
-        try {
-//            Cookie uiColorCookie = new Cookie("color", "red");
-//            response.addCookie(uiColorCookie);
-            Cookie[] cookie = request.getCookies();
-            //System.out.println(cookie[0].getName());
-        } catch (Exception e) {
-
-        }
-
-
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentPrincipalName = authentication.getName();
-//        System.out.println(currentPrincipalName);
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("news", newsServices.findAllNews());
         modelAndView.addObject("mostViewed", viewsServices.getPopularNewsByViews());
@@ -173,7 +157,7 @@ public class NewsController {
         return modelAndView;
     }
 
-    //    @PreAuthorize("hasAnyRole('ADMIN')")
+    //@PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/newsUpload")
     public ModelAndView newsUpload() {
         ModelAndView modelAndView = new ModelAndView();
@@ -230,8 +214,6 @@ public class NewsController {
             }
             while (destFile.exists());
             file.transferTo(destFile);
-            //image.setImageSource(uploadPath.concat(destFileName));
-            //image.setImageSource("/image/"+destFileName);
             image.setActive(true);
             image.setImageCreationDTM(new java.util.Date());
             image.setImageUpdationDTM(new java.util.Date());
@@ -261,18 +243,8 @@ public class NewsController {
     @PostMapping("/registration")
     public ModelAndView registration(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-
-//            Role role1 = new Role("ADMIN");
-//            roleService.saveRole(role1);
-//            Role role2 = new Role("USER");
-//            roleService.saveRole(role2);
-
         modelAndView.setViewName("success");
         if (bindingResult.hasErrors()) {
-//            List<ObjectError> errors = bindingResult.getAllErrors();
-//            for (ObjectError error : errors) {
-//                System.out.println(error.getDefaultMessage());
-//            }
             modelAndView.setViewName("registration");
             modelAndView.addObject("userForm", userForm);
             return new ModelAndView("registration");
@@ -287,8 +259,6 @@ public class NewsController {
         message.setSubject("Testing spring mail");
         message.setText(appUrl);
         javaMailSender.send(message);
-
-        //userSecurityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
         return modelAndView;
     }
 
@@ -302,7 +272,6 @@ public class NewsController {
 
     @RequestMapping("/user/login")
     public ModelAndView showLogin(Authentication authentication) {
-        //System.out.print(authentication);
         return new ModelAndView("user-login");
     }
 
@@ -316,7 +285,6 @@ public class NewsController {
 
     @GetMapping("/verifyingUser/{id}/{token}")
     public ModelAndView verifyingUser(@PathVariable("id") long id, @PathVariable("token") String token) {
-
         User user = new User();
         user.setId(id);
         if (userService.verifyingUser(user, token)) {
@@ -384,15 +352,18 @@ public class NewsController {
             NewsComments newsComments = new NewsComments();
             newsComments.setUser(user);
             newsComments.setComment(comment.getComment());
-            return new ResponseEntity(newsComments,HttpStatus.OK);
+            return new ResponseEntity(newsComments, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/showComments")
     public ResponseEntity<List<NewsComments>> showComments(@RequestParam("newsid") long newsId) {
-
-        System.out.print(newsId);
         return new ResponseEntity<>(newsCommentsRepository.showAllCommentsByNewsId(newsId), HttpStatus.OK);
+    }
+
+    @GetMapping("/subcategories")
+    public ResponseEntity<List<NewsSubCategory>> showAllSubCategory(){
+        return  new ResponseEntity<>(newsSubCategoryRepository.findAllSubCategory(),HttpStatus.OK);
     }
 }

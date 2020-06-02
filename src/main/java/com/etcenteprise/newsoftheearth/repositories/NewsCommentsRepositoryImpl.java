@@ -47,7 +47,6 @@ public class NewsCommentsRepositoryImpl implements NewsCommentsRepository {
         return newsComments;
     }
 
-
     @Override
     public boolean deleteComment(Long newsId, Long userId, Long commentId) {
         return false;

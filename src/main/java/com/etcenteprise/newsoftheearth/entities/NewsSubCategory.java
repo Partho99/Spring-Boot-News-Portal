@@ -1,8 +1,6 @@
 package com.etcenteprise.newsoftheearth.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,20 +9,22 @@ public class NewsSubCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int subCategory;
+    private int subCategoryId;
+    @Column(nullable = true)
+    private Integer parentId;
     private String subCategoryName;
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
+
     @ManyToOne
     @JoinColumn(name = "newscategoryid")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private  NewsCategory newsCategory;
+    //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private NewsCategory newsCategory;
 
-    public NewsSubCategory(){
+    public NewsSubCategory() {
 
     }
-
 
     public NewsSubCategory(String subCategoryName, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory) {
         this.subCategoryName = subCategoryName;
@@ -35,11 +35,11 @@ public class NewsSubCategory {
     }
 
     public int getSubCategory() {
-        return subCategory;
+        return subCategoryId;
     }
 
-    public void setSubCategory(int subCategory) {
-        this.subCategory = subCategory;
+    public void setSubCategory(int subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public String getSubCategoryName() {
@@ -80,5 +80,21 @@ public class NewsSubCategory {
 
     public void setNewsCategory(NewsCategory newsCategory) {
         this.newsCategory = newsCategory;
+    }
+
+    public int getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(int subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }
