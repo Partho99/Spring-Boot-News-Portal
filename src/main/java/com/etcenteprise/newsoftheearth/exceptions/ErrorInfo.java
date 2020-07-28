@@ -1,15 +1,19 @@
 package com.etcenteprise.newsoftheearth.exceptions;
 
-public class ErrorInfo {
-    public final StringBuffer url;
-    public String ex;
-    private String message;
+import java.util.List;
 
-    ErrorInfo(StringBuffer url, Exception ex) {
-        this.url = url;
-        this.ex = ex.getLocalizedMessage();
+public class ErrorInfo {
+    private List<String> errors;
+
+    public ErrorInfo(List<String> errors) {
+        this.errors = errors;
     }
-    public void setMessage(String message) {
-        this.message = message;
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
     }
 }

@@ -36,9 +36,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-
-
-
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -67,22 +64,25 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/news/**").permitAll()
                 .antMatchers("/newsUpload/**").access("hasAuthority('ROLE_ADMIN')")
+                .antMatchers("/webjars/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll()
-                .successHandler(successHandler())
                 .loginPage("/user/login")
-                .loginProcessingUrl("/authUser")
-                .usernameParameter("auth_user_name")
-                .passwordParameter("auth_user_pass")
+                .failureUrl("/user/login?error=true")
+                .successHandler(successHandler())
+                //.loginProcessingUrl("/authUser")
+                //.usernameParameter("auth_user_name")
+                //.passwordParameter("auth_user_pass")
                 .and()
                 .logout().deleteCookies("SSID")
                 .logoutSuccessUrl("/")
                 .and()
                 .exceptionHandling().accessDeniedPage("/access_denied");
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -94,7 +94,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler successHandler() {
         return new CustomLoginSuccessHandler("/");
     }
-
 
 
 }

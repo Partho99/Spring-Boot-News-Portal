@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Preneurlab login">
+    <meta name="author" content="Ashiful Islam">
+
+    <title> Data Table | Preneurlab</title>
+
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+    <!-- Custom styles for this page-->
+    <style>
+        body { background: #607d8b;}
+        .btn-sm { padding: 0.20rem .5rem;font-size: 11px;line-height: 1.2;border-radius: .2rem;}
+    </style>
+
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 pl-0 pr-0">
+            <div class="card">
+                <h5 class="card-header text-center alert-success">Dashboard Name</h5>
+                <div class="card-body">
+                    <table id="dataTable" class="table table-striped table-bordered table-responsive-sm">
+                        <thead class="text-center">
+                        <tr class="alert-dark">
+                            <th scope="col">Id</th>
+                            <th scope="col">Mobile No</th>
+                            <th scope="col">Name</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="susers: ${souravdata}">
+                            <td th:text="${susers.id}">Mark</td>
+                            <td th:text="${susers.mobile_no}">Mark</td>
+                            <td th:text="${susers.name}">Mark</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    } );
+</script>
+</body>

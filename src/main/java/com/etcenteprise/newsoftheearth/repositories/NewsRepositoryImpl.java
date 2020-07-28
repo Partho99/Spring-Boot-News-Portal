@@ -1,6 +1,7 @@
 package com.etcenteprise.newsoftheearth.repositories;
 
 import com.etcenteprise.newsoftheearth.entities.News;
+import com.etcenteprise.newsoftheearth.entities.Users;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -46,5 +47,12 @@ public class NewsRepositoryImpl implements NewsRepository {
         } else {
             System.out.println("news is not exists...!");
         }
+    }
+
+    @Override
+    public List<Users> showAllUsers() {
+        TypedQuery<Users> newsList = entityManager.createQuery("from users", Users.class);
+        List<Users> users = newsList.getResultList();
+        return users;
     }
 }

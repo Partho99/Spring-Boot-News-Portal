@@ -13,21 +13,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-<!--    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">-->
-    <link
-            href="webjars/jquery/3.0.0/jquery.min.js"
-            th:href="@{/webjars/jquery/3.0.0/jquery.min.js}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-    <script language="JavaScript" type="text/javascript" th:src="@{/js/getnews.js}"></script>
+    <!--    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">-->
 
 
-    <!-- CSS
-	============================================ -->
-    <!-- Bootstrap CSS -->
-
-    <!-- Style CSS -->
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 </head>
 
@@ -62,7 +50,7 @@
                                     <li><a class="active" data-toggle="tab" href="#feature-cat-1">Science</a></li>
                                     <li><a data-toggle="tab" href="#feature-cat-2">Health</a></li>
                                     <li><a data-toggle="tab" href="#feature-cat-1">Politics</a></li>
-                                    <li><a data-toggle="tab" href="/sports">Sports</a></li>
+                                    <li><a data-toggle="tab" href="#feature-cat-3">Sports</a></li>
                                     <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">More</a>
 
                                         <!-- Dropdown -->
@@ -171,26 +159,27 @@
 
                                                 <!-- Post Small Start -->
                                                 <div class="post post-small post-list feature-post post-separator-border"
-                                                     th:each="category: ${mostViewed}">
+                                                     th:each="category: ${science}">
                                                     <div class="post-wrap">
 
                                                         <!-- Image -->
-                                                        <a class="image" href="post-details.html"><img
+                                                        <a class="image" href="l"><img
                                                                 src="img/post/post-16.jpg" alt="post"></a>
 
                                                         <!-- Content -->
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a href="post-details.html"
-                                                                                 th:text="${category.news.newsHeading}">featured
+                                                            <h5 class="title"><a th:href="@{'/' +${category.newsCategory.CategoryName} +'/news/' +
+                                                             ${T(com.etcenteprise.newsoftheearth.utilities.Slug).deAccent(category.newsHeading)} +'/'+${category.newsId}}"
+                                                                                 th:text="${category.newsHeading}">featured
                                                                 News Heading</a></h5>
 
                                                             <!-- Meta -->
                                                             <div class="meta fix">
                                                                 <span class="meta-item date"><i
                                                                         class="fa fa-clock-o"
-                                                                        th:text="${category.news.creationDTM}"></i></span>
+                                                                        th:text="${category.creationDTM}"></i></span>
                                                             </div>
 
                                                         </div>
@@ -208,6 +197,7 @@
                                         </div>
 
                                     </div><!-- Tab Pane End-->
+
 
                                     <!-- Tab Pane Start-->
                                     <div class="tab-pane fade" id="feature-cat-2">
@@ -295,33 +285,6 @@
                                             <div class="col-md-6 col-12 mb-20">
 
                                                 <!-- Post Small Start -->
-                                                <div class="post post-small post-list feature-post post-separator-border">
-                                                    <div class="post-wrap">
-
-                                                        <!-- Image -->
-                                                        <a class="image" href="post-details.html"><img
-                                                                src="img/post/post-16.jpg" alt="post"></a>
-
-                                                        <!-- Content -->
-                                                        <div class="content">
-
-                                                            <!-- Title -->
-                                                            <h5 class="title"><a href="post-details.html">Apple, time to
-                                                                IOS
-                                                                With macos.</a></h5>
-
-                                                            <!-- Meta -->
-                                                            <div class="meta fix">
-                                                                <span class="meta-item date"><i
-                                                                        class="fa fa-clock-o"></i>10 March 2019</span>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div><!-- Post Small End -->
-
-                                                <!-- Post Small Start -->
                                                 <div class="post post-small post-list feature-post post-separator-border"
                                                      th:each="category: ${news}">
                                                     <div class="post-wrap">
@@ -351,103 +314,119 @@
                                                     </div>
                                                 </div><!-- Post Small End -->
 
-                                                <!-- Post Small Start -->
-                                                <div class="post post-small post-list feature-post post-separator-border">
+                                            </div><!-- Small Post Wrapper End -->
+
+                                        </div>
+
+                                    </div><!-- Tab Pane End-->
+
+                                    <div class="tab-pane fade" id="feature-cat-3">
+
+                                        <div class="row">
+
+                                            <!-- Post Wrapper Start -->
+                                            <div class="col-md-6 col-12 mb-20">
+
+                                                <!-- Post Start -->
+                                                <div class="post feature-post post-separator-border">
                                                     <div class="post-wrap">
 
                                                         <!-- Image -->
                                                         <a class="image" href="post-details.html"><img
-                                                                src="img/post/post-18.jpg" alt="post"></a>
+                                                                src="img/post/post-12.jpg" alt="post"></a>
 
                                                         <!-- Content -->
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a href="post-details.html">Most beautiful
-                                                                lens for an amaing photo.</a></h5>
+                                                            <h4 class="title"><a href="post-details.html">How group of
+                                                                rebel
+                                                                are talking on Banasree epidemic.</a></h4>
 
                                                             <!-- Meta -->
                                                             <div class="meta fix">
+                                                                <a href="#" class="meta-item author"><i
+                                                                        class="fa fa-user"></i>Sathi Bhuiyan</a>
                                                                 <span class="meta-item date"><i
                                                                         class="fa fa-clock-o"></i>10 March 2019</span>
+                                                                <a href="#" class="meta-item comment"><i
+                                                                        class="fa fa-comments"></i>(34)</a>
                                                             </div>
+
+                                                            <!-- Description -->
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elits.
+                                                                Proin nec purus lectus. Aenean sodales quis eros is quis
+                                                                eleifend. Vestibulum condimentum.</p>
 
                                                         </div>
 
                                                     </div>
-                                                </div><!-- Post Small End -->
+                                                </div><!-- Post End -->
 
-                                                <!-- Post Small Start -->
-                                                <div class="post post-small post-list feature-post post-separator-border">
+                                                <!-- Post Start -->
+                                                <div class="post feature-post post-separator-border">
                                                     <div class="post-wrap">
 
                                                         <!-- Image -->
                                                         <a class="image" href="post-details.html"><img
-                                                                src="img/post/post-13.jpg" alt="post"></a>
+                                                                src="img/post/post-11.jpg" alt="post"></a>
 
                                                         <!-- Content -->
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a href="post-details.html">Hynpodia helps
-                                                                female travelers find health.</a></h5>
+                                                            <h4 class="title"><a href="post-details.html">Fashion is
+                                                                about
+                                                                some thing that comes from with in you.</a></h4>
 
                                                             <!-- Meta -->
                                                             <div class="meta fix">
+                                                                <a href="#" class="meta-item author"><i
+                                                                        class="fa fa-user"></i>Sathi Bhuiyan</a>
                                                                 <span class="meta-item date"><i
                                                                         class="fa fa-clock-o"></i>10 March 2019</span>
+                                                                <a href="#" class="meta-item comment"><i
+                                                                        class="fa fa-comments"></i>(34)</a>
                                                             </div>
+
+                                                            <!-- Description -->
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elits.
+                                                                Proin nec purus lectus. Aenean sodales quis eros is quis
+                                                                eleifend. Vestibulum condimentum.</p>
 
                                                         </div>
 
                                                     </div>
-                                                </div><!-- Post Small End -->
+                                                </div><!-- Post End -->
+
+                                            </div><!-- Post Wrapper End -->
+
+                                            <!-- Small Post Wrapper Start -->
+                                            <div class="col-md-6 col-12 mb-20">
 
                                                 <!-- Post Small Start -->
-                                                <div class="post post-small post-list feature-post post-separator-border">
+                                                <div class="post post-small post-list feature-post post-separator-border"
+                                                     th:each="category: ${sports}">
                                                     <div class="post-wrap">
 
                                                         <!-- Image -->
-                                                        <a class="image" href="post-details.html"><img
-                                                                src="img/post/post-14.jpg" alt="post"></a>
+                                                        <a class="image" href="l"><img
+                                                                src="img/post/post-16.jpg" alt="post"></a>
 
                                                         <!-- Content -->
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a href="post-details.html">Australia
-                                                                announced squad for Bangladesh tour.</a></h5>
+                                                            <h5 class="title"><a th:href="@{'/' +${category.newsCategory.CategoryName} +'/news/' +
+                                                             ${T(com.etcenteprise.newsoftheearth.utilities.Slug).deAccent(category.newsHeading)} +'/'+${category.newsId}}"
+                                                                                 th:text="${category.newsHeading}">featured
+                                                                News Heading</a></h5>
 
                                                             <!-- Meta -->
                                                             <div class="meta fix">
                                                                 <span class="meta-item date"><i
-                                                                        class="fa fa-clock-o"></i>10 March 2019</span>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div><!-- Post Small End -->
-
-                                                <!-- Post Small Start -->
-                                                <div class="post post-small post-list feature-post post-separator-border">
-                                                    <div class="post-wrap">
-
-                                                        <!-- Image -->
-                                                        <a class="image" href="post-details.html"><img
-                                                                src="img/post/post-15.jpg" alt="post"></a>
-
-                                                        <!-- Content -->
-                                                        <div class="content">
-
-                                                            <!-- Title -->
-                                                            <h5 class="title"><a href="post-details.html">Fish Fry With
-                                                                green vegetables.</a></h5>
-
-                                                            <!-- Meta -->
-                                                            <div class="meta fix">
-                                                                <span class="meta-item date"><i
-                                                                        class="fa fa-clock-o"></i>10 March 2019</span>
+                                                                        class="fa fa-clock-o"
+                                                                        th:text="${category.creationDTM}"></i></span>
                                                             </div>
 
                                                         </div>
@@ -459,7 +438,7 @@
 
                                         </div>
 
-                                    </div><!-- Tab Pane End-->
+                                    </div>
 
                                 </div><!-- Tab Content End-->
 
@@ -469,75 +448,145 @@
 
                     </div>
 
+
                     <!-- Sidebar Start -->
-                    <div class="col-lg-4 col-12 mb-50">
-                        <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12 mb-50">
 
-                            <!-- Single Sidebar -->
-                            <div class="single-sidebar col-lg-12 col-md-6 col-12">
+                        <!-- Single Sidebar -->
+                        <div class="single-sidebar">
 
-                                <!-- Sidebar Block Wrapper -->
-                                <div class="sidebar-block-wrapper">
+                            <!-- Sidebar Block Wrapper -->
+                            <div class="sidebar-block-wrapper">
 
-                                    <!-- Sidebar Block Head Start -->
-                                    <div class="head feature-head">
+                                <!-- Sidebar Block Head Start -->
+                                <div class="head education-head">
 
-                                        <!-- Title -->
-                                        <h4 class="title">Follow Us</h4>
+                                    <!-- Tab List -->
+                                    <div class="sidebar-tab-list education-sidebar-tab-list nav">
+                                        <a class="active" data-toggle="tab" href="#latest-news">Latest News</a>
+                                        <a data-toggle="tab" href="#popular-news">Popular News</a>
+                                    </div>
 
-                                    </div><!-- Sidebar Block Head End -->
+                                </div><!-- Sidebar Block Head End -->
 
-                                    <!-- Sidebar Block Body Start -->
-                                    <div class="body">
+                                <!-- Sidebar Block Body Start -->
+                                <div class="body">
 
-                                        <div class="sidebar-social-follow">
-                                            <div>
-                                                <a href="#" class="facebook">
-                                                    <i class="fa fa-facebook"></i>
-                                                    <h3>40,583</h3>
-                                                    <span>Fans</span>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="#" class="google-plus">
-                                                    <i class="fa fa-google-plus"></i>
-                                                    <h3>36,857</h3>
-                                                    <span>Followers</span>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="#" class="twitter">
-                                                    <i class="fa fa-twitter"></i>
-                                                    <h3>50,883</h3>
-                                                    <span>Followers</span>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="#" class="dribbble">
-                                                    <i class="fa fa-dribbble"></i>
-                                                    <h3>4,743</h3>
-                                                    <span>Followers</span>
-                                                </a>
-                                            </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="latest-news">
+
+                                            <!-- Small Post Start -->
+                                            <div class="post post-small post-list education-post post-separator-border">
+                                                <div class="post-wrap">
+                                                    <!-- Image -->
+                                                    <a class="image" href="post-details.html"><img
+                                                            src="img/post/post-33.jpg" alt="post"></a>
+                                                    <!-- Content -->
+                                                    <div class="content">
+                                                        <!-- Title -->
+                                                        <h5 class="title"><a href="post-details.html">Hynpodia helps
+                                                            female
+                                                            travelers find health..</a></h5>
+                                                        <!-- Meta -->
+                                                        <div class="meta fix">
+                                                            <span class="meta-item date"><i class="fa fa-clock-o"></i>10 March 2019</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- Small Post End -->
+
+                                            <!-- Small Post Start -->
+                                            <div class="post post-small post-list education-post post-separator-border">
+                                                <div class="post-wrap">
+
+                                                    <!-- Image -->
+                                                    <a class="image" href="post-details.html"><img
+                                                            src="img/post/post-34.jpg" alt="post"></a>
+
+                                                    <!-- Content -->
+                                                    <div class="content">
+
+                                                        <!-- Title -->
+                                                        <h5 class="title"><a href="post-details.html">How do you solve
+                                                            the
+                                                            IOS page problem.</a></h5>
+
+                                                        <!-- Meta -->
+                                                        <div class="meta fix">
+                                                            <span class="meta-item date"><i class="fa fa-clock-o"></i>10 March 2019</span>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div><!-- Small Post End -->
+
                                         </div>
+                                        <div class="tab-pane fade" id="popular-news">
 
-                                    </div><!-- Sidebar Block Body End -->
+                                            <!-- Small Post Start -->
+                                            <div class="post post-small post-list education-post post-separator-border">
+                                                <div class="post-wrap">
 
-                                </div>
+                                                    <!-- Image -->
+                                                    <a class="image" href="post-details.html"><img
+                                                            src="img/post/post-35.jpg" alt="post"></a>
 
-                            </div>
+                                                    <!-- Content -->
+                                                    <div class="content">
 
-                            <!-- Single Sidebar -->
-                            <div class="single-sidebar col-lg-12 col-md-6 col-12">
+                                                        <!-- Title -->
+                                                        <h5 class="title"><a href="post-details.html">Home is not a
+                                                            place .
+                                                            . . . . . it’s a feeling.</a></h5>
 
-                                <!-- Sidebar Banner -->
-                                <a href="#" class="sidebar-banner"><img src="img/banner/sidebar-banner-1.jpg"
-                                                                        alt="Sidebar Banner"></a>
+                                                        <!-- Meta -->
+                                                        <div class="meta fix">
+                                                            <span class="meta-item date"><i class="fa fa-clock-o"></i>10 March 2019</span>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div><!-- Small Post End -->
+
+                                            <!-- Small Post Start -->
+                                            <div class="post post-small post-list education-post post-separator-border">
+                                                <div class="post-wrap">
+
+                                                    <!-- Image -->
+                                                    <a class="image" href="post-details.html"><img
+                                                            src="img/post/post-36.jpg" alt="post"></a>
+
+                                                    <!-- Content -->
+                                                    <div class="content">
+
+                                                        <!-- Title -->
+                                                        <h5 class="title"><a href="post-details.html">How do you solve
+                                                            the
+                                                            local political page problem.</a></h5>
+
+                                                        <!-- Meta -->
+                                                        <div class="meta fix">
+                                                            <span class="meta-item date"><i class="fa fa-clock-o"></i>10 March 2019</span>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div><!-- Small Post End -->
+
+                                        </div>
+                                    </div>
+
+                                </div><!-- Sidebar Block Body End -->
 
                             </div>
 
                         </div>
-                    </div><!-- Sidebar End -->
+
+                    </div>
+                    <!-- Sidebar End -->
 
                 </div><!-- Feature Post Row End -->
 

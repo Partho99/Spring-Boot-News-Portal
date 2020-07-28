@@ -19,6 +19,7 @@ public class NewsComments {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "news_id", nullable = false)
     private News news;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

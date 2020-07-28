@@ -8,9 +8,14 @@ public class Slug {
     public static String deAccent(String str) {
         String norm = Normalizer.normalize(str, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(norm).replaceAll("").replace(" ", "-").toLowerCase();
+        return pattern.matcher(norm)
+                .replaceAll("")
+                .replace(" ", "-")
+                .replace(",", "-")
+                .replace(";", "")
+                .replace("/","").toLowerCase();
     }
-    }
+}
 
 
 

@@ -163,4 +163,24 @@ public class News implements Serializable {
     public void setNewsComments(List<NewsComments> newsComments) {
         this.newsComments = newsComments;
     }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "newsId=" + newsId +
+                ", newsHeading='" + newsHeading + '\'' +
+                ", newsTitle='" + newsTitle + '\'' +
+                ", newsDescription='" + newsDescription + '\'' +
+                ", newsTeaser='" + newsTeaser + '\'' +
+                ", newsImageSource='" + newsImageSource + '\'' +
+                ", creationDTM=" + creationDTM +
+                ", updationDTM=" + updationDTM +
+                ", isActive=" + isActive +
+                ", newsCategory=" + newsCategory +
+                ", image=" + image +
+                ", views=" + views +
+                ", newsVoting=" + newsVoting +
+                ", newsComments=" + newsComments +
+                '}';
+    }
 }

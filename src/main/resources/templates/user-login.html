@@ -23,12 +23,12 @@
 <body>
 
 <div class="limiter">
-    <div class="container-login100" style="background-image: url('/static/images/bg-01.jpg');">
+    <div class="container-login100" style="background-image: url('/images/bg-01.jpg');">
 
 
         <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
 
-            <form th:action="@{/authUser}" method="POST"
+            <form th:action="@{/user/login}" method="POST"
                   class="login100-form validate-form flex-sb flex-w">
 					<span class="login100-form-title p-b-53">
 						Sign In With
@@ -44,17 +44,18 @@
                     Google
                 </a>
                 <div>
-                    <p th:if="${param.error}" class="error" style="color: red">
+                    <p th:if="${param.error}" class="error" style="color: red" >
                         Bad Credentials
                     </p>
                 </div>
+
                 <div class="p-t-31 p-b-9">
 						<span class="txt1">
 							Username
 						</span>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Username is required">
-                    <input class="input100" type="text" name="auth_user_name">
+                    <input class="input100" type="text" name="username">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -68,7 +69,7 @@
                     </a>
                 </div>
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="auth_user_pass">
+                    <input class="input100" type="password" name="password">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -97,6 +98,30 @@
 
 
 <script src="js/main.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        load_comment();
+        $('#comment_form').on('submit', function (event) {
+            event.preventDefault();
+            const form_data = $(this).serialize();
+            $.ajax({
+                url: "/postComment",
+                method: "POST",
+                data: form_data,
+                success: function (data) {
+                    if (data.error != '') {
+                        $('#comment_form')[0].reset();
+                        const container = document.querySelector(".new_comment");
+
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
