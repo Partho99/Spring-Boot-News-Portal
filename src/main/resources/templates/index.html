@@ -24,6 +24,7 @@
 
 <!-- Main Wrapper -->
 <div layout:fragment="content">
+    
 
     <div id="main-wrapper">
 
@@ -288,10 +289,14 @@
                                                 <div class="post post-small post-list feature-post post-separator-border"
                                                      th:each="category: ${news}">
                                                     <div class="post-wrap">
+                                                        <div th:each="image: ${category.image}">
+                                                            <img th:src="${image.getImageSource()}" width="50"
+                                                                 height="50"/>
+                                                        </div>
 
                                                         <!-- Image -->
-                                                        <a class="image" href="l"><img
-                                                                src="img/post/post-16.jpg" alt="post"></a>
+<!--                                                        <a class="image" href=""><img-->
+<!--                                                                src="" alt="post"></a>-->
 
                                                         <!-- Content -->
                                                         <div class="content">

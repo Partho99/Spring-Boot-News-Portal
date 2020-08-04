@@ -11,10 +11,14 @@ public class NewsImage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long imageId;
     private String imageSource;
+    @JsonIgnore
     private Date imageCreationDTM;
+    @JsonIgnore
     private Date imageUpdationDTM;
+    @JsonIgnore
     private boolean isActive;
     @ManyToOne
     @JsonIgnore

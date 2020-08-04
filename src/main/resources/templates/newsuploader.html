@@ -137,7 +137,7 @@
     <script>
         $(document).ready(function () {
             CKEDITOR.replace('editor', {
-                filebrowserImageUploadUrl: '/image/upload'
+                filebrowserImageUploadUrl: '/image/upload',
             });
             CKEDITOR.on('dialogDefinition', function (e) {
                 var dialogName = e.data.name;

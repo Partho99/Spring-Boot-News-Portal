@@ -21,6 +21,94 @@
 
 <div layout:fragment="content">
 
+    <div class="menu-section section bg-yellow" th:if="${hasNewsSubCategory}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="menu-section-wrap">
+
+                        <!-- Main Menu Start -->
+                        <div class="main-menu main-menu-2 float-left d-none d-md-block">
+                            <nav>
+                                <ul th:each="categories : ${hasNewsSubCategory}">
+                                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/sports-'+categories.subCategoryName ? 'active':''}">
+                                        <a th:href="@{'/sports-'+${categories.subCategoryName}}"
+                                           th:text="${categories.subCategoryName}"></a></li>
+                                    <ul class="sub-menu">
+                                        <li><a href="../blog.html">blog</a></li>
+                                        <li><a href="/sports/sports-details">blog details</a></li>
+                                        <li><a href="../contact-us.html">contact</a></li>
+                                        <li><a href="../post-details.html">post details</a></li>
+                                    </ul><!-- Submenu End -->
+                                    </li>
+
+                                </ul>
+                            </nav>
+                        </div><!-- Main Menu Start -->
+
+                        <div class="mobile-logo d-none d-block d-md-none"><a href="index.html"><img
+                                src="img/logo-white-3.png" alt="Logo"></a></div>
+
+                        <!-- Header Search -->
+
+
+                        <!-- Mobile Menu Wrap -->
+                        <div class="mobile-menu-wrap d-none">
+                            <nav>
+                                <ul>
+
+                                    <li class="active"><a href="index.html">Home</a>
+
+                                        <!-- Submenu Start -->
+                                        <ul class="sub-menu">
+                                            <li><a href="index.html">Home One</a></li>
+                                            <li><a href="index-2.html">Home Two</a></li>
+                                            <li class="active"><a href="index-3.html">Home Three</a></li>
+                                            <li><a href="index-4.html">Home Four</a></li>
+                                        </ul><!-- Submenu End -->
+
+                                    </li>
+                                    <li><a href="category-science.html">News</a></li>
+                                    <li><a href="category-sports.html">Sports</a></li>
+                                    <li><a href="category-science.html">Lifestyle</a>
+
+                                        <!-- Submenu Start -->
+                                        <ul class="sub-menu">
+                                            <li><a href="category-entertainment.html">Beauty</a></li>
+                                            <li><a href="category-science.html">travel</a></li>
+                                            <li><a href="category-sports.html">Interior Design</a></li>
+                                            <li><a href="category-science.html">Photography</a></li>
+                                            <li><a href="category-entertainment.html">fashion</a></li>
+                                            <li><a href="category-sports.html">music</a></li>
+                                        </ul><!-- Submenu End -->
+
+                                    </li>
+                                    <li><a href="category-entertainment.html">Fashion</a></li>
+                                    <li><a href="category-politics.html">politic</a></li>
+                                    <li><a href="#">pages</a>
+
+                                        <!-- Submenu Start -->
+                                        <ul class="sub-menu">
+                                            <li><a href="blog.html">blog</a></li>
+                                            <li><a href="blog-details.html">blog details</a></li>
+                                            <li><a href="contact-us.html">contact</a></li>
+                                            <li><a href="post-details.html">post details</a></li>
+                                        </ul><!-- Submenu End -->
+
+                                    </li>
+
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <!-- Mobile Menu -->
+                        <div class="mobile-menu mobile-menu-2"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Main Wrapper -->
     <div id="main-wrapper">
 

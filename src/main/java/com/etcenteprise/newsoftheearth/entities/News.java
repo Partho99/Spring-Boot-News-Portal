@@ -20,7 +20,6 @@ public class News implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String newsDescription;
     private String newsTeaser;
-    private String newsImageSource;
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
@@ -28,8 +27,7 @@ public class News implements Serializable {
     @JsonIgnore
     @JoinColumn(name = "newscategoryid")
     private NewsCategory newsCategory;
-    @JsonIgnore
-    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private Set<NewsImage> image;
     @JsonIgnore
     @OneToOne(mappedBy = "news", cascade = CascadeType.REMOVE)
@@ -48,12 +46,11 @@ public class News implements Serializable {
         this.newsId = newsId;
     }
 
-    public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, String newsImageSource, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory) {
+    public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory) {
         this.newsHeading = newsHeading;
         this.newsTitle = newsTitle;
         this.newsDescription = newsDescription;
         this.newsTeaser = newsTeaser;
-        this.newsImageSource = newsImageSource;
         this.creationDTM = creationDTM;
         this.updationDTM = updationDTM;
         this.isActive = isActive;
@@ -98,14 +95,6 @@ public class News implements Serializable {
 
     public void setNewsTeaser(String newsTeaser) {
         this.newsTeaser = newsTeaser;
-    }
-
-    public String getNewsImageSource() {
-        return newsImageSource;
-    }
-
-    public void setNewsImageSource(String newsImageSource) {
-        this.newsImageSource = newsImageSource;
     }
 
     public Date getCreationDTM() {
@@ -172,7 +161,6 @@ public class News implements Serializable {
                 ", newsTitle='" + newsTitle + '\'' +
                 ", newsDescription='" + newsDescription + '\'' +
                 ", newsTeaser='" + newsTeaser + '\'' +
-                ", newsImageSource='" + newsImageSource + '\'' +
                 ", creationDTM=" + creationDTM +
                 ", updationDTM=" + updationDTM +
                 ", isActive=" + isActive +

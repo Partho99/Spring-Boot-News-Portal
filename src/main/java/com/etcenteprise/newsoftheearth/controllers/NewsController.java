@@ -102,6 +102,11 @@ public class NewsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         modelAndView.addObject("news", newsServices.findAllNews());
+        List<News> n = newsServices.findAllNews();
+
+        for (News news : n) {
+            System.out.println(news.getImage());
+        }
         modelAndView.addObject("mostViewed", viewsServices.getPopularNewsByViews());
         modelAndView.addObject("category", newsCategoryServices.findAllNewsCategory());
         modelAndView.addObject("business", newsCategoryServices.findByCategoryName("business"));
@@ -139,10 +144,76 @@ public class NewsController {
     public ModelAndView bangladesh() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Sports"));
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Bangladesh"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
         System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-bangladesh");
+        return mv;
+    }
+
+    @GetMapping("/Sports")
+    public ModelAndView sports() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Sports"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        System.out.println(newsSubCategoryRepository.fbc());
+        mv.setViewName("category-sports");
+        return mv;
+    }
+
+    @GetMapping("/International")
+    public ModelAndView international() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("International"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        System.out.println(newsSubCategoryRepository.fbc());
+        mv.setViewName("category-international");
+        return mv;
+    }
+
+    @GetMapping("/Entertainment")
+    public ModelAndView entertainment() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Entertainment"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        System.out.println(newsSubCategoryRepository.fbc());
+        mv.setViewName("category-entertainment");
+        return mv;
+    }
+
+    @GetMapping("/Politics")
+    public ModelAndView politics() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Politics"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        System.out.println(newsSubCategoryRepository.fbc());
+        mv.setViewName("category-politics");
+        return mv;
+    }
+
+    @GetMapping("/Science")
+    public ModelAndView science() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Science"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        System.out.println(newsSubCategoryRepository.fbc());
+        mv.setViewName("category-science");
+        return mv;
+    }
+
+    @GetMapping("/sports-Cricket")
+    public ModelAndView sportsCricket() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Sports"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        System.out.println(newsSubCategoryRepository.fbc());
+        mv.setViewName("index-4");
         return mv;
     }
 
@@ -197,7 +268,7 @@ public class NewsController {
     String uploadUri;
 
     @PostMapping("/image/upload")
-    public String upload(@RequestPart(value = "file") MultipartFile upload, @RequestParam(value = "CKEditorFuncNum") String callback, HttpServletRequest request) throws IOException {
+    public String upload(@RequestPart MultipartFile upload, @RequestParam(value = "CKEditorFuncNum") String callback, HttpServletRequest request) throws IOException {
         System.out.println(upload.getOriginalFilename());
         String sourceName = upload.getOriginalFilename();
         String sourceExt = FilenameUtils.getExtension(sourceName);
@@ -232,9 +303,6 @@ public class NewsController {
             for (MultipartFile file : files) {
                 sourceName = file.getOriginalFilename();
                 sourceExt = FilenameUtils.getExtension(sourceName);
-                if(!sourceExt.equals("png")){
-                    throw new IOException("Only png is valid");
-                }
                 do {
                     destFileName = RandomStringUtils.randomAlphabetic(8).concat(".").concat(sourceExt);
                     destFile = new File(uploadPath.concat(destFileName));
@@ -262,32 +330,40 @@ public class NewsController {
     @GetMapping("/registration")
     public ModelAndView registration(Model model) {
 //        model.addAttribute("userForm", new User());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userForm", new User());
-        modelAndView.setViewName("registration");
-        return modelAndView;
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        if (loggedInUser.getName().equals("anonymousUser")) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("userForm", new User());
+            modelAndView.setViewName("registration");
+            return modelAndView;
+        }
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/registration")
     public ModelAndView registration(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("success");
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
-            modelAndView.addObject("userForm", userForm);
-            return new ModelAndView("registration");
-        }
-        userService.save(userForm);
-        String token = userVerificationTokenRepository.constructToken();
-        userVerificationTokenRepository.saveToken(userForm, token);
 
-        final String appUrl = "http://" + "localhost" + ":" + 8080 + "/verifyingUser/" + userForm.getId() + "/" + token;
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(userForm.getEmail());
-        message.setSubject("Testing spring mail");
-        message.setText(appUrl);
-        javaMailSender.send(message);
-        return modelAndView;
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        if (loggedInUser.getName().equals("anonymousUser")) {
+            ModelAndView modelAndView = new ModelAndView();
+            if (bindingResult.hasErrors()) {
+                modelAndView.setViewName("registration");
+                modelAndView.addObject("userForm", userForm);
+                return new ModelAndView("registration");
+            }
+            userService.save(userForm);
+            String token = userVerificationTokenRepository.constructToken();
+            userVerificationTokenRepository.saveToken(userForm, token);
+
+            final String appUrl = "http://" + "localhost" + ":" + 8080 + "/verifyingUser/" + userForm.getId() + "/" + token;
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(userForm.getEmail());
+            message.setSubject("Testing spring mail");
+            message.setText(appUrl);
+            javaMailSender.send(message);
+            return modelAndView;
+        }
+        return new ModelAndView("redirect:/");
     }
 
 
@@ -457,8 +533,8 @@ public class NewsController {
 
     @GetMapping("/usersem")
     public ResponseEntity<List<Users>> getAllEmployees(
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "5") Integer pageNo,
+            @RequestParam(defaultValue = "100") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy) {
         List<Users> list = usersService.getAllEmployees(pageNo, pageSize, sortBy);
 

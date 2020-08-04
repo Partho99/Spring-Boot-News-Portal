@@ -49,17 +49,20 @@
         crossorigin="anonymous"></script>
 <div layout:fragment="content">
 
+
+
     <!-- Main Wrapper -->
     <div id="main-wrapper">
 
+
         <!-- Post Section Start -->
-        <div class="post-section section">
+        <div class="post-section section" >
             <div class="container">
 
                 <!-- Feature Post Row Start -->
                 <div class="row">
 
-                    <div class="col-lg-8 col-12 mb-50">
+                    <div class="col-lg-12 col-12 mb-50">
 
                         <!-- Post Block Wrapper Start -->
                         <div class="post-block-wrapper mb-50">
@@ -78,6 +81,12 @@
                                                 <!-- Content -->
                                                 <div class="content" th:object="${singleNews}">
 
+                                                    <style>
+                                                        img {
+                                                            max-width: 100%;
+                                                            height: auto !important;
+                                                        }
+                                                    </style>
                                                     <!-- Description -->
                                                     <!--                                                <p class="dropcap" th:text="${singleNews.newsHeading}"></p>-->
                                                     <h1 class="" th:text="${singleNews.getNewsHeading()}"></h1>
@@ -95,7 +104,9 @@
 
                                                     <!--                                                <object th:text="${singleNews.newsDescription}"></object>-->
 
-                                                    <div th:utext="${singleNews.getNewsDescription()}"></div>
+                                                    <div >
+                                                        <h4 th:utext="${singleNews.getNewsDescription()}"></h4>
+                                                    </div>
 
                                                 </div>
 
@@ -785,6 +796,7 @@
         </script>
     </div>
 </div>
+
 </body>
 
 </html>

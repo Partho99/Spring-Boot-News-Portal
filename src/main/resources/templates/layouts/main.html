@@ -35,6 +35,16 @@
 </head>
 <body>
 
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<!--
+                    DEMO
+===========================================
+<div th:switch="${user.role}">
+  <p th:case="'admin'">User is an administrator</p>
+  <p th:case="#{roles.manager}">User is a manager</p>
+  <p th:case="*">User is some other thing</p>
+</div>
+-->
 <div class="header-top section">
     <div class="container">
         <div class="row">
@@ -44,67 +54,17 @@
 
                 <!-- Header Links -->
                 <ul class="header-links">
-                    <li class="disabled block d-none d-md-block"><a href="#"><i class="fa fa-clock-o"></i> Sunday,
-                        March 25, 2019</a></li>
-                    <li class="d-none d-md-block"><a href="#"><i class="fa fa-mixcloud"></i> <span
-                            class="weather-degrees">20 <span class="unit">c</span> </span> <span
-                            class="weather-location">- Sydney</span></a></li>
-                    <div sec:authorize="!isAuthenticated()">
-                        <!--                        <li><a href="/registration"><i class="fa fa-user-circle-o"></i>Sign Up</a></li>-->
-                        <!--                        <li><a href="user/login"><i class="fa fa-user-circle-o"></i>Sign In</a></li>-->
-<!--                        <li>-->
-<!--                            <button class="btn btn-sm btn-info" type="button" data-toggle="modal"-->
-<!--                                    data-target="#myModal"><input type="hidden"><i class="fa fa-user-circle-o"></i>Sign-->
-<!--                                Up-->
-<!--                            </button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <button type="button" data-toggle="modal" data-target="#myModal2"><i-->
-<!--                                    class="fa fa-user-circle-o"></i>Sign Up-->
-<!--                            </button>-->
-<!--                        </li>-->
-                        <li><a href="user/login"><i class="fa fa-user-circle-o"></i>Sign In</a></li>
-                    </div>
-                    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span>
-                        <a th:href="@{/logout}">Logout</a>
-                    </div>
-
-                    <li><a href="../contact-us.html"><i class="fa fa-headphones"></i>Contact</a></li>
-                    <li><a href="../blog.html">Blog</a></li>
+                    <li class="disabled block d-none d-md-block"><a href="#"><i class="fa fa-clock-o"></i> Sunday, March 25, 2019</a></li>
+                    <li class="d-none d-md-block"><a href="#"><i class="fa fa-mixcloud"></i> <span class="weather-degrees">20 <span class="unit">c</span> </span> <span class="weather-location">- Sydney</span></a></li>
+                    <li sec:authorize="!isAuthenticated()"><a href="user/login"><i class="fa fa-user-circle-o"></i>Sign In</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="user/login"><i class="fa fa-user-circle-o"></i><span sec:authentication="name"></span></a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+                    <li><a href="contact-us.html"><i class="fa fa-headphones"></i>Contact</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                 </ul>
 
             </div><!-- Header Top Links End -->
-            <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
 
-                    <!-- Modal content-->
-                    <form th:action="@{/user/login}" method="POST">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Sign Up</h4>
-                        </div>
-                        <div class="modal-body">
-                            <input id="username" class="form-control" type="text" name="username"
-                                   placeholder="Your Email" required/>
-                            <div>
-                                <p th:if="${param.error}" class="error" style="color: red" >
-                                    Bad Credentials
-                                </p>
-                            </div>
-                            <input id="password" class="form-control" type="password" name="password"
-                                   placeholder="Password" required/>
-                            <!--                            <input type="file" class="form-control" name="image" required />-->
-                            <!--                            <inpput type="submity" name="submit" value="Submit" />-->
-                        </div>
-                        <div class="modal-footer">
-                            <button onclick="ajaxGet()" type="submit" class="btn btn-success" id="submit">Submit
-                            </button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-            </div>
             <!-- Header Top Social Start -->
             <div class="header-top-social col-md-3 col-6">
 
@@ -122,7 +82,14 @@
 
         </div>
     </div>
-</div><!-- Header Top End -->
+</div>
+
+
+<!--
+                    DEMO
+===========================================
+ <li sec:authorize="isAuthenticated()"><a href="user/login"><i class="fa fa-user-circle-o"></i><span sec:authentication="name"></span></a></li>
+-->
 
 <!-- Header Start -->
 <!-- Menu Section Start -->
@@ -133,7 +100,7 @@
                 <div class="menu-section-wrap">
 
                     <!-- Main Menu Start -->
-                    <div class="main-menu float-left d-none d-md-block">
+                    <div class="main-menu  float-left d-none d-md-block animated-main-menu">
                         <nav>
                             <ul style="padding-right: 25px">
                                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a
@@ -194,23 +161,23 @@
                                     </ul><!-- Submenu End -->
 
                                 </li>
-                                <li><a href="../category-lifestyle.html">News</a></li>
+                                <li><a href="../category-science.html">News</a></li>
                                 <li><a href="../category-sports.html">Sports</a></li>
-                                <li><a href="../category-lifestyle.html">Lifestyle</a>
+                                <li><a href="../category-science.html">Lifestyle</a>
 
                                     <!-- Submenu Start -->
                                     <ul class="sub-menu">
                                         <li><a href="../category-bangladesh.html">Beauty</a></li>
-                                        <li><a href="../category-lifestyle.html">travel</a></li>
+                                        <li><a href="../category-science.html">travel</a></li>
                                         <li><a href="../category-sports.html">Interior Design</a></li>
-                                        <li><a href="../category-lifestyle.html">Photography</a></li>
-                                        <li><a href="../category-fashion.html">fashion</a></li>
+                                        <li><a href="../category-science.html">Photography</a></li>
+                                        <li><a href="../category-entertainment.html">fashion</a></li>
                                         <li><a href="../category-sports.html">music</a></li>
                                     </ul><!-- Submenu End -->
 
                                 </li>
-                                <li><a href="../category-fashion.html">Fashion</a></li>
-                                <li><a href="../category-politic.html">politic</a></li>
+                                <li><a href="../category-entertainment.html">Fashion</a></li>
+                                <li><a href="../category-politics.html">politic</a></li>
                                 <li><a href="#">pages</a>
 
                                     <!-- Submenu Start -->
@@ -269,95 +236,7 @@
     </div>
 </div><!-- Breaking News Section End -->
 
-<div class="menu-section section bg-yellow" th:if="${hasNewsSubCategory}">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="menu-section-wrap">
 
-                    <!-- Main Menu Start -->
-                    <div class="main-menu  float-left d-none d-md-block">
-                        <nav>
-                            <ul th:each="categories : ${hasNewsSubCategory}">
-                                <li th:classappend="${#httpServletRequest.getRequestURI() == '/'+categories.subCategoryName ? 'active':''}">
-                                    <a th:href="@{'/'+${categories.subCategoryName}}"
-                                       th:text="${categories.subCategoryName}"></a></li>
-                                <ul class="sub-menu">
-                                    <li><a href="../blog.html">blog</a></li>
-                                    <li><a href="/sports/sports-details">blog details</a></li>
-                                    <li><a href="../contact-us.html">contact</a></li>
-                                    <li><a href="../post-details.html">post details</a></li>
-                                </ul><!-- Submenu End -->
-
-                                </li>
-
-                            </ul>
-                        </nav>
-                    </div><!-- Main Menu Start -->
-
-                    <div class="mobile-logo d-none d-block d-md-none"><a href="index.html"><img
-                            src="img/logo-white-3.png" alt="Logo"></a></div>
-
-                    <!-- Header Search -->
-
-
-                    <!-- Mobile Menu Wrap -->
-                    <div class="mobile-menu-wrap d-none">
-                        <nav>
-                            <ul>
-
-                                <li class="active"><a href="index.html">Home</a>
-
-                                    <!-- Submenu Start -->
-                                    <ul class="sub-menu">
-                                        <li><a href="index.html">Home One</a></li>
-                                        <li><a href="index-2.html">Home Two</a></li>
-                                        <li class="active"><a href="index-3.html">Home Three</a></li>
-                                        <li><a href="index-4.html">Home Four</a></li>
-                                    </ul><!-- Submenu End -->
-
-                                </li>
-                                <li><a href="category-lifestyle.html">News</a></li>
-                                <li><a href="category-sports.html">Sports</a></li>
-                                <li><a href="category-lifestyle.html">Lifestyle</a>
-
-                                    <!-- Submenu Start -->
-                                    <ul class="sub-menu">
-                                        <li><a href="category-fashion.html">Beauty</a></li>
-                                        <li><a href="category-lifestyle.html">travel</a></li>
-                                        <li><a href="category-sports.html">Interior Design</a></li>
-                                        <li><a href="category-lifestyle.html">Photography</a></li>
-                                        <li><a href="category-fashion.html">fashion</a></li>
-                                        <li><a href="category-sports.html">music</a></li>
-                                    </ul><!-- Submenu End -->
-
-                                </li>
-                                <li><a href="category-fashion.html">Fashion</a></li>
-                                <li><a href="category-politic.html">politic</a></li>
-                                <li><a href="#">pages</a>
-
-                                    <!-- Submenu Start -->
-                                    <ul class="sub-menu">
-                                        <li><a href="blog.html">blog</a></li>
-                                        <li><a href="blog-details.html">blog details</a></li>
-                                        <li><a href="contact-us.html">contact</a></li>
-                                        <li><a href="post-details.html">post details</a></li>
-                                    </ul><!-- Submenu End -->
-
-                                </li>
-
-                            </ul>
-                        </nav>
-                    </div>
-
-                    <!-- Mobile Menu -->
-                    <div class="mobile-menu mobile-menu-2"></div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div layout:fragment="content">
 

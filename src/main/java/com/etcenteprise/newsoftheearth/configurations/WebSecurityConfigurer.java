@@ -81,7 +81,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/access_denied");
 
 
-
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
