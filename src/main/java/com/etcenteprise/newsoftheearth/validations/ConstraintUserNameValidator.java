@@ -23,7 +23,7 @@ public class ConstraintUserNameValidator implements ConstraintValidator<IsValidU
             if (userService.findByUsername(userName).isPresent() == true) {
                 return false;
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
         }
         return true;
     }

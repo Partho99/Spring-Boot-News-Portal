@@ -2,7 +2,6 @@
 <html class="no-js" lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.utraq.net.nz/tyymeleaf/layput"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorator="layouts/main">
 
@@ -16,7 +15,6 @@
     <!--    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">-->
 
 
-
 </head>
 
 <body>
@@ -24,7 +22,7 @@
 
 <!-- Main Wrapper -->
 <div layout:fragment="content">
-    
+
 
     <div id="main-wrapper">
 
@@ -160,7 +158,7 @@
 
                                                 <!-- Post Small Start -->
                                                 <div class="post post-small post-list feature-post post-separator-border"
-                                                     th:each="category: ${science}">
+                                                     th:each="category: ${news}">
                                                     <div class="post-wrap">
 
                                                         <!-- Image -->
@@ -171,7 +169,7 @@
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a th:href="@{'/' +${category.newsCategory.CategoryName} +'/news/' +
+                                                            <h5 class="title"><a th:href="@{'/' +${category.categoriesAndSubCategories.CategoryName} +'/news/' +
                                                              ${T(com.etcenteprise.newsoftheearth.utilities.Slug).deAccent(category.newsHeading)} +'/'+${category.newsId}}"
                                                                                  th:text="${category.newsHeading}">featured
                                                                 News Heading</a></h5>
@@ -295,14 +293,14 @@
                                                         </div>
 
                                                         <!-- Image -->
-<!--                                                        <a class="image" href=""><img-->
-<!--                                                                src="" alt="post"></a>-->
+                                                        <!--                                                        <a class="image" href=""><img-->
+                                                        <!--                                                                src="" alt="post"></a>-->
 
                                                         <!-- Content -->
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a th:href="@{'/' +${category.newsCategory.CategoryName} +'/news/' +
+                                                            <h5 class="title"><a th:href="@{'/' +${category.categoriesAndSubCategories.CategoryName} +'/news/' +
                                                              ${T(com.etcenteprise.newsoftheearth.utilities.Slug).deAccent(category.newsHeading)} +'/'+${category.newsId}}"
                                                                                  th:text="${category.newsHeading}">featured
                                                                 News Heading</a></h5>
@@ -422,7 +420,7 @@
                                                         <div class="content">
 
                                                             <!-- Title -->
-                                                            <h5 class="title"><a th:href="@{'/' +${category.newsCategory.CategoryName} +'/news/' +
+                                                            <h5 class="title"><a th:href="@{'/' +${category.categoriesAndSubCategories.CategoryName} +'/news/' +
                                                              ${T(com.etcenteprise.newsoftheearth.utilities.Slug).deAccent(category.newsHeading)} +'/'+${category.newsId}}"
                                                                                  th:text="${category.newsHeading}">featured
                                                                 News Heading</a></h5>

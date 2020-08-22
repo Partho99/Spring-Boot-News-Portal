@@ -39,7 +39,7 @@ public class NewsController {
     @Autowired
     private NewsServices newsServices;
     @Autowired
-    private NewsCategoryServices newsCategoryServices;
+    private NewsCategoriesAndSubCategoriesRepository newsCategoryServices;
     @Autowired
     private ViewsServices viewsServices;
     @Autowired
@@ -61,7 +61,7 @@ public class NewsController {
     @Autowired
     private NewsCommentsRepository newsCommentsRepository;
     @Autowired
-    private NewsSubCategoryRepository newsSubCategoryRepository;
+    private NewsCategoriesAndSubCategoriesRepository newsSubCategoryRepository;
 
     @GetMapping("/news")
     public ResponseEntity<List<News>> getAllNews() {
@@ -92,10 +92,10 @@ public class NewsController {
 
     private static final Logger logger = Logger.getLogger(String.valueOf(NewsController.class));
 
-    @GetMapping("/newscategory")
-    public List<NewsCategory> showAllNewsCategory() {
-        return newsCategoryServices.findAllNewsCategory();
-    }
+//    @GetMapping("/newscategory")
+//    public List<NewsCategory> showAllNewsCategory() {
+//        return newsCategoryServices.findAllNewsCategory();
+//    }
 
     @RequestMapping("/")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -134,19 +134,12 @@ public class NewsController {
         return modelAndView;
     }
 
-
-    // this is for interface segregation
-    @Autowired
-    private NewsSubCategoryRepository.newMethodAdded newMethodAdded;
-
-
     @GetMapping("/Bangladesh")
     public ModelAndView bangladesh() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Bangladesh"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("Bangladesh"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-bangladesh");
         return mv;
     }
@@ -155,9 +148,8 @@ public class NewsController {
     public ModelAndView sports() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Sports"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("Sports"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-sports");
         return mv;
     }
@@ -166,9 +158,8 @@ public class NewsController {
     public ModelAndView international() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("International"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("International"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-international");
         return mv;
     }
@@ -177,9 +168,8 @@ public class NewsController {
     public ModelAndView entertainment() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Entertainment"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("Entertainment"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-entertainment");
         return mv;
     }
@@ -188,9 +178,8 @@ public class NewsController {
     public ModelAndView politics() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Politics"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("Politics"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-politics");
         return mv;
     }
@@ -199,9 +188,8 @@ public class NewsController {
     public ModelAndView science() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Science"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("Science"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("category-science");
         return mv;
     }
@@ -210,10 +198,19 @@ public class NewsController {
     public ModelAndView sportsCricket() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
-        mv.addObject("hasNewsSubCategory", newMethodAdded.findNewsSubCategoriesByCategoryName("Sports"));
+        mv.addObject("hasNewsSubCategory", newsCategoryServices.findNewsSubCategoriesByCategoryName("Sports"));
         mv.addObject("category", newsCategoryServices.findAllNewsCategory());
-        System.out.println(newsSubCategoryRepository.fbc());
         mv.setViewName("index-4");
+        return mv;
+    }
+
+    @GetMapping("/entertainment-Movies")
+    public ModelAndView entertainmentMovies() {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("categorye", newsCategoryServices.findAllNewsCategory());
+        mv.addObject("hasNewsSubCategory", newsSubCategoryRepository.findNewsSubCategoriesByCategoryName("Movies"));
+        mv.addObject("category", newsCategoryServices.findAllNewsCategory());
+        mv.setViewName("entertainment-movies");
         return mv;
     }
 
@@ -255,7 +252,7 @@ public class NewsController {
     public ModelAndView newsUpload() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("news", new News());
-        modelAndView.addObject("newsCategory", newsCategoryServices.findAllNewsCategory());
+        modelAndView.addObject("newsCategory", newsCategoryServices.findAllNewsCategoriesAndSubCategories());
         modelAndView.setViewName("newsuploader");
         return modelAndView;
     }
@@ -321,11 +318,11 @@ public class NewsController {
         return "success";
     }
 
-    @GetMapping("/showCate")
-    public List<NewsCategory> imageCate() {
-
-        return newsCategoryServices.findAllNewsCategory();
-    }
+//    @GetMapping("/showCate")
+//    public List<NewsCategory> imageCate() {
+//
+//        return newsCategoryServices.findAllNewsCategory();
+//    }
 
     @GetMapping("/registration")
     public ModelAndView registration(Model model) {
@@ -482,30 +479,6 @@ public class NewsController {
         return new ResponseEntity<>(newsCommentsRepository.showAllCommentsByNewsId(newsId), HttpStatus.OK);
     }
 
-    @GetMapping("/subcategories")
-    public ResponseEntity<List<NewsSubCategory>> showAllSubCategory() {
-        return new ResponseEntity<>(newsSubCategoryRepository.findAllSubCategory(), HttpStatus.OK);
-    }
-
-    @GetMapping("/subcategorybyid/{subcategoryId}")
-    public ResponseEntity<NewsSubCategory> showSubCategoryById(@PathVariable("subcategoryId") int id) {
-        return new ResponseEntity<>(newsSubCategoryRepository.findBySubCategoryId(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/subcategorybycategoryid/{subcategoryIdx}")
-    public ResponseEntity<List<NewsSubCategory>> showSubCategoryByCategoryId(@PathVariable("subcategoryIdx") int id) {
-        return new ResponseEntity<>(newsSubCategoryRepository.findSubCategoryByCategoryId(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/allcategories")
-    public ResponseEntity<List<NewsCategory>> showallCategoryByCategoryId() {
-        return new ResponseEntity<>(newsCategoryServices.findAllNewsCategory(), HttpStatus.OK);
-    }
-
-    @GetMapping("/subcategorybyname/{subcategoryName}")
-    public ResponseEntity<NewsSubCategory> showSubCategoryByName(@PathVariable("subcategoryName") String name) {
-        return new ResponseEntity<>(newsSubCategoryRepository.findBySubCategoryName(name), HttpStatus.OK);
-    }
 
     @Autowired
     private NewsRepository newsRepository;
@@ -548,4 +521,23 @@ public class NewsController {
 
         System.out.println(arr[5]);
     }
+
+    @GetMapping("/practise")
+    public ModelAndView practise() {
+        ModelAndView mv = new ModelAndView("practise");
+        // mv.setViewName("practise");
+        mv.addObject("newsCategory", newsCategoryServices.findAllNewsCategory());
+        return mv;
+    }
+
+    @Autowired
+    private NewsCategoriesAndSubCategoriesRepository categoriesAndSubCategories;
+
+
+    @GetMapping("/showNewData")
+    public ResponseEntity<List<NewsCategoriesAndSubCategories>> showdata() {
+        return new ResponseEntity<>(categoriesAndSubCategories.findNewsSubCategoriesByCategoryName("Sports"), HttpStatus.OK);
+    }
+
+
 }

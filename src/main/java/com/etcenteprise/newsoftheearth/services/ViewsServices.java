@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ViewsServices {
     List<Views> getPopularNewsByViews();
-    
+
 }

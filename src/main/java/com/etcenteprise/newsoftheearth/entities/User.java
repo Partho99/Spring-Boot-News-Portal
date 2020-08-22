@@ -43,6 +43,8 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<NewsCommentReplies> newsCommentReplies;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private UserImage userImage;
 
     public User() {
     }
@@ -57,6 +59,16 @@ public class User {
         this.password = user.getPassword();
         this.userStatus = user.getUserStatus();
         this.roles = user.getRoles();
+        this.fullName = user.getFullName();
+        this.userImage = user.getUserImage();
+    }
+
+    public UserImage getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UserImage userImage) {
+        this.userImage = userImage;
     }
 
     public Long getId() {

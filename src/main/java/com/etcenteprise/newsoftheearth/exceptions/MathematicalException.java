@@ -7,7 +7,7 @@ public class MathematicalException extends RuntimeException {
         return new MathematicalException(error);
     }
 
-    public   MathematicalException(String error) {
+    public MathematicalException(String error) {
         this.error = error;
     }
 

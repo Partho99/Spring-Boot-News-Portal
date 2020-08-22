@@ -32,7 +32,7 @@ $(document).ready(function () {
                         '                            </div>' +
                         '                            <div class="card-body">' +
                         '                                <div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i> 10 min ago</div>'
-                    something += data.comment ;
+                    something += data.comment;
                     something += '</div>';
                     container.innerHTML += something;
 
@@ -46,7 +46,7 @@ $(document).ready(function () {
         var news = {"newsid": newsId};
         $.ajax({
             url: "/showComments",
-            data:news,
+            data: news,
             method: "POST",
             dataType: "JSON",
             success: function (data) {
@@ -72,7 +72,7 @@ $(document).ready(function () {
                         '                            </div>' +
                         '                            <div class="card-body">' +
                         '                                <div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i> 10 min ago</div>'
-                    something += data[i].comment ;
+                    something += data[i].comment;
                     something += '</div>';
                     container.innerHTML += something;
                 }

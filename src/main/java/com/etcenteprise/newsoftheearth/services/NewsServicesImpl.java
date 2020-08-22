@@ -13,7 +13,6 @@ import java.util.List;
 public class NewsServicesImpl implements NewsServices {
 
 
-
     @Autowired
     private NewsRepository newsRepository;
 

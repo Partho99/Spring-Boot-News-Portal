@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NewsCommentsRepository {
 
-    NewsComments saveComment(Long newsId, Long userId,String comment);
+    NewsComments saveComment(Long newsId, Long userId, String comment);
 
     boolean updateComment(Long newsId, Long userId, Long commentId);
 

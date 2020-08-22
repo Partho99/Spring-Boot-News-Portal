@@ -38,8 +38,8 @@ public class NewsImageRepositoryImpl implements NewsImageRepository {
 
     @Override
     public List<NewsImage> findByNews(long newsId) {
-        TypedQuery<NewsImage> newsImageQuery = entityManager.createQuery("from NewsImage where news.newsId=:newsId",NewsImage.class);
-        newsImageQuery.setParameter("newsId",newsId);
+        TypedQuery<NewsImage> newsImageQuery = entityManager.createQuery("from NewsImage where news.newsId=:newsId", NewsImage.class);
+        newsImageQuery.setParameter("newsId", newsId);
         List<NewsImage> newsImages = newsImageQuery.getResultList();
         return newsImages;
     }

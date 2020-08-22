@@ -1743,7 +1743,7 @@ blockquote.blockquote.blockquote-bg p {
 }
 
 
-.animated-main-menu nav > ul > li > a:after{
+.animated-main-menu nav > ul > li > a:after {
     content: '';
     width: 0px;
     height: 2px;
@@ -1755,10 +1755,11 @@ blockquote.blockquote.blockquote-bg p {
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
 }
 
-.animated-main-menu nav > ul > li > a:hover:after{
+.animated-main-menu nav > ul > li > a:hover:after {
     width: 100%;
     left: 0;
 }
+
 .main-menu nav > ul > li.active > a {
     text-decoration: none;
     color: #ffffff;

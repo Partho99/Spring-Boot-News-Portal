@@ -42,7 +42,7 @@ public class UserVerificationTokenRepositoryImpl implements UserVerificationToke
     @Override
     public UserVerificationToken findByUserId(User id) {
         Query userVerificationToken = entityManager.createQuery("from UserVerificationToken where user=:id", UserVerificationToken.class);
-        userVerificationToken.setParameter("id",id);
+        userVerificationToken.setParameter("id", id);
         UserVerificationToken verificationToken = (UserVerificationToken) userVerificationToken.getSingleResult();
         return verificationToken;
 

@@ -2,7 +2,6 @@
 <html class="no-js" lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.utraq.net.nz/tyymeleaf/layput"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorator="layouts/main">
 
@@ -50,13 +49,12 @@
 <div layout:fragment="content">
 
 
-
     <!-- Main Wrapper -->
     <div id="main-wrapper">
 
 
         <!-- Post Section Start -->
-        <div class="post-section section" >
+        <div class="post-section section">
             <div class="container">
 
                 <!-- Feature Post Row Start -->
@@ -89,7 +87,7 @@
                                                     </style>
                                                     <!-- Description -->
                                                     <!--                                                <p class="dropcap" th:text="${singleNews.newsHeading}"></p>-->
-                                                    <h1 class="" th:text="${singleNews.getNewsHeading()}"></h1>
+                                                    <h1 class="" th:text="${singleNews.NewsHeading}"></h1>
 
                                                     <div th:each="image: ${newsImage}">
                                                         <img th:src="${image.getImageSource()}" width="730"
@@ -104,7 +102,7 @@
 
                                                     <!--                                                <object th:text="${singleNews.newsDescription}"></object>-->
 
-                                                    <div >
+                                                    <div>
                                                         <h4 th:utext="${singleNews.getNewsDescription()}"></h4>
                                                     </div>
 

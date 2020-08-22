@@ -36,13 +36,17 @@ public class NewsImage implements Serializable {
         this.news = news;
     }
 
-    public Long getImageId() { return imageId; }
+    public Long getImageId() {
+        return imageId;
+    }
 
     public void setImageId(Long imageId) {
         this.imageId = imageId;
     }
 
-    public String getImageSource() { return imageSource; }
+    public String getImageSource() {
+        return imageSource;
+    }
 
     public void setImageSource(String imageSource) {
         this.imageSource = imageSource;
@@ -72,7 +76,11 @@ public class NewsImage implements Serializable {
         isActive = active;
     }
 
-    public News getNews() { return news; }
+    public News getNews() {
+        return news;
+    }
 
-    public void setNews(News news) { this.news = news; }
+    public void setNews(News news) {
+        this.news = news;
+    }
 }

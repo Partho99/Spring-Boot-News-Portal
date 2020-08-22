@@ -17,13 +17,13 @@ public class UsersService {
 
     @Autowired
     private UsersReopsitory usersReopsitory;
-    public List<Users> getAllEmployees(Integer pageNo, Integer pageSize, String sortBy)
-    {
+
+    public List<Users> getAllEmployees(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
         Page<Users> pagedResult = usersReopsitory.findAll(paging);
 
-        if(pagedResult.hasContent()) {
+        if (pagedResult.hasContent()) {
             return pagedResult.getContent();
         } else {
             return new ArrayList<Users>();

@@ -54,11 +54,20 @@
 
                 <!-- Header Links -->
                 <ul class="header-links">
-                    <li class="disabled block d-none d-md-block"><a href="#"><i class="fa fa-clock-o"></i> Sunday, March 25, 2019</a></li>
-                    <li class="d-none d-md-block"><a href="#"><i class="fa fa-mixcloud"></i> <span class="weather-degrees">20 <span class="unit">c</span> </span> <span class="weather-location">- Sydney</span></a></li>
-                    <li sec:authorize="!isAuthenticated()"><a href="user/login"><i class="fa fa-user-circle-o"></i>Sign In</a></li>
-                    <li sec:authorize="isAuthenticated()"><a href="user/login"><i class="fa fa-user-circle-o"></i><span sec:authentication="name"></span></a></li>
-                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+                    <li class="disabled block d-none d-md-block"><a href="#"><i class="fa fa-clock-o"></i> Sunday, March
+                        25, 2019</a></li>
+                    <li class="d-none d-md-block"><a href="#"><i class="fa fa-mixcloud"></i> <span
+                            class="weather-degrees">20 <span class="unit">c</span> </span> <span
+                            class="weather-location">- Sydney</span></a></li>
+                    <li sec:authorize="!isAuthenticated()"><a href="user/login"><i class="fa fa-user-circle-o"></i>Sign
+                        In</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="user/login"><img
+                            th:src="${#authentication.getPrincipal().getUserImage().getImagePath()}"
+                            class="rounded-circle" width="35" height="27"> <span
+                            th:text="${#authentication.getPrincipal().getFullName()}"></span></a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fa fa-sign-out"
+                                                                                     aria-hidden="true"></i>Logout</a>
+                    </li>
                     <li><a href="contact-us.html"><i class="fa fa-headphones"></i>Contact</a></li>
                     <li><a href="blog.html">Blog</a></li>
                 </ul>
@@ -235,7 +244,6 @@
         </div>
     </div>
 </div><!-- Breaking News Section End -->
-
 
 
 <div layout:fragment="content">

@@ -41,8 +41,8 @@ public class NewsCommentsRepositoryImpl implements NewsCommentsRepository {
 
     @Override
     public List<NewsComments> showAllCommentsByNewsId(long newsId) {
-        Query query = entityManager.createQuery("from NewsComments where news.newsId=:newsId",NewsComments.class);
-        query.setParameter("newsId",newsId);
+        Query query = entityManager.createQuery("from NewsComments where news.newsId=:newsId", NewsComments.class);
+        query.setParameter("newsId", newsId);
         List<NewsComments> newsComments = query.getResultList();
         return newsComments;
     }

@@ -1,11 +1,11 @@
 /******************************************************
-* #### jQuery-Youtube-Channels-Playlist v7.0 ####
-* Coded by Ican Bachors 2014.
-* https://github.com/bachors/jQuery-Youtube-Channels-Playlist
-* Updates will be posted to this site.
-******************************************************/
+ * #### jQuery-Youtube-Channels-Playlist v7.0 ####
+ * Coded by Ican Bachors 2014.
+ * https://github.com/bachors/jQuery-Youtube-Channels-Playlist
+ * Updates will be posted to this site.
+ ******************************************************/
 
-$.fn.ycp = function(j) {
+$.fn.ycp = function (j) {
     const n = {
         playlist: 10,
         autoplay: false,
@@ -14,7 +14,7 @@ $.fn.ycp = function(j) {
     j.playlist = (j.playlist == undefined ? n.playlist : j.playlist);
     j.autoplay = (j.autoplay == undefined ? n.autoplay : j.autoplay);
     j.related = (j.related == undefined ? n.related : j.related);
-    $(this).each(function(i, a) {
+    $(this).each(function (i, a) {
         const b = ($(this).attr('id') != null && $(this).attr('id') != undefined ? `#${$(this).attr('id')}` : `.${$(this).attr('class')}`);
         const title = ($(this).data('ycp_title') == undefined ? 'YCP.js' : $(this).data('ycp_title'));
         const channel = $(this).data('ycp_channel');
@@ -88,8 +88,8 @@ $.fn.ycp = function(j) {
                 ycp_list(h, f, g, k, l);
                 return false
             });
-            $(`${l} .ycp div#ycp_youtube_channels${k} div.play`).each(function() {
-                $(this).click(function() {
+            $(`${l} .ycp div#ycp_youtube_channels${k} div.play`).each(function () {
+                $(this).click(function () {
                     const a = $(this).attr("data-vvv");
                     const m = $(this).attr("data-img");
                     $(`${l} .ycp div#ycp_youtube_channels${k} div`).removeClass('vid-active');
@@ -107,7 +107,7 @@ $.fn.ycp = function(j) {
                     return false
                 })
             });
-            $(`${l} .ycp div.ycp_vid_play:eq(${k})`).click(function() {
+            $(`${l} .ycp div.ycp_vid_play:eq(${k})`).click(function () {
                 const a = $(`${l} .ycp div#ycp_youtube_channels${k} div.play.vid-active`).attr("data-vvv");
                 $(this).html(`<iframe src="https://www.youtube.com/embed/${a}?rel=${j.related ? 1 : 0}&amp;autoplay=1" allowfullscreen="" frameborder="0" class="bingkay"></iframe>`);
                 return false

@@ -6,10 +6,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-public class NewsCategory {
+public class NewsCategoriesAndSubCategories {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,25 +18,25 @@ public class NewsCategory {
     private Date updationDTM;
     private boolean isActive;
     @JsonIgnore
-    @OneToMany(mappedBy = "newsCategory")
+    @OneToMany(mappedBy = "categoriesAndSubCategories")
     private List<News> newsList = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "newsCategory")
-    private Set<NewsSubCategory> newsSubCategories;
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private NewsCategoriesAndSubCategories parentId;
 
-    public NewsCategory(){
+    public NewsCategoriesAndSubCategories() {
 
     }
 
-    public NewsCategory(String categoryName, Date creationDTM, Date updationDTM, boolean isActive) {
+    public NewsCategoriesAndSubCategories(String categoryName, Date creationDTM, Date updationDTM, boolean isActive) {
         CategoryName = categoryName;
         this.creationDTM = creationDTM;
         this.updationDTM = updationDTM;
         this.isActive = isActive;
     }
 
-    public NewsCategory(String categoryName, Date creationDTM, Date updationDTM, boolean isActive, List<News> newsList) {
+    public NewsCategoriesAndSubCategories(String categoryName, Date creationDTM, Date updationDTM, boolean isActive, List<News> newsList) {
         CategoryName = categoryName;
         this.creationDTM = creationDTM;
         this.updationDTM = updationDTM;
@@ -93,11 +92,11 @@ public class NewsCategory {
         this.newsList = newsList;
     }
 
-    public Set<NewsSubCategory> getNewsSubCategories() {
-        return newsSubCategories;
+    public NewsCategoriesAndSubCategories getParentId() {
+        return parentId;
     }
 
-    public void setNewsSubCategories(Set<NewsSubCategory> newsSubCategories) {
-        this.newsSubCategories = newsSubCategories;
+    public void setParentId(NewsCategoriesAndSubCategories parentId) {
+        this.parentId = parentId;
     }
 }

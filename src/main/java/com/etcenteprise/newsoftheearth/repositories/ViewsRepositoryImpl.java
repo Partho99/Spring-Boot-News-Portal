@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
 @Transactional
 @Repository
 public class ViewsRepositoryImpl implements ViewsRepository {

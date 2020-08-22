@@ -11,16 +11,16 @@ public class NewsVoting {
     private Boolean upVote;
     private Boolean downVote;
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "news_id" ,nullable = false)
+    @JoinColumn(name = "news_id", nullable = false)
     private News news;
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "user_id" ,nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public NewsVoting() {
     }
 
-    public NewsVoting( Boolean upVote, Boolean downVote, News news, User user) {
+    public NewsVoting(Boolean upVote, Boolean downVote, News news, User user) {
         this.upVote = upVote;
         this.downVote = downVote;
         this.news = news;

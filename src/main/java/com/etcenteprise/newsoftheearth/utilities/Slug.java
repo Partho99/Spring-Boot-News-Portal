@@ -13,7 +13,7 @@ public class Slug {
                 .replace(" ", "-")
                 .replace(",", "-")
                 .replace(";", "")
-                .replace("/","").toLowerCase();
+                .replace("/", "").toLowerCase();
     }
 }
 

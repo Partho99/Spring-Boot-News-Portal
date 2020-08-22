@@ -1,5 +1,5 @@
 package com.etcenteprise.newsoftheearth.repositories;
 
-public interface UserRoleReository{
+public interface UserRoleReository {
     void saveRole();
 }

@@ -2,7 +2,6 @@
 <html class="no-js" lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.utraq.net.nz/tyymeleaf/layput"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorator="layouts/main">
 
@@ -31,9 +30,9 @@
                         <div class="main-menu main-menu-2 float-left d-none d-md-block">
                             <nav>
                                 <ul th:each="categories : ${hasNewsSubCategory}">
-                                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/sports-'+categories.subCategoryName ? 'active':''}">
-                                        <a th:href="@{'/sports-'+${categories.subCategoryName}}"
-                                           th:text="${categories.subCategoryName}"></a></li>
+                                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/sports-'+categories.CategoryName ? 'active':''}">
+                                        <a th:href="@{'/sports-'+${categories.CategoryName}}"
+                                           th:text="${categories.CategoryName}"></a></li>
                                     <ul class="sub-menu">
                                         <li><a href="../blog.html">blog</a></li>
                                         <li><a href="/sports/sports-details">blog details</a></li>
@@ -111,8 +110,6 @@
     </div>
     <!-- Main Wrapper -->
     <div id="main-wrapper">
-
-
 
 
         <!-- Page Banner Section Start -->

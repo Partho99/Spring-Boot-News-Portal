@@ -15,12 +15,12 @@ public class NewsCommentReplies {
     private Date createdTime;
     private Date updatedTime;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     private boolean isActive;
     @JsonIgnore
-    @ManyToOne(cascade =CascadeType.MERGE)
-    @JoinColumn(name = "newsComments_id",nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "newsComments_id", nullable = false)
     private NewsComments newsComments;
 
     public NewsCommentReplies() {

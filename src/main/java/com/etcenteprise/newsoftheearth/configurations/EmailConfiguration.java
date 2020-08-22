@@ -10,7 +10,7 @@ public class EmailConfiguration {
 
     @Primary
     @Bean
-    public FreeMarkerConfigurationFactoryBean factoryBean(){
+    public FreeMarkerConfigurationFactoryBean factoryBean() {
         FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
         bean.setTemplateLoaderPath("classpath:/templates");
         return bean;

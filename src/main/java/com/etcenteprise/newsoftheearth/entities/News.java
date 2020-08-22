@@ -23,21 +23,22 @@ public class News implements Serializable {
     private Date creationDTM;
     private Date updationDTM;
     private boolean isActive;
-    @ManyToOne()
-    @JsonIgnore
-    @JoinColumn(name = "newscategoryid")
-    private NewsCategory newsCategory;
-    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<NewsImage> image;
     @JsonIgnore
     @OneToOne(mappedBy = "news", cascade = CascadeType.REMOVE)
     private Views views;
     @JsonIgnore
-    @OneToMany(mappedBy = "news" ,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     private List<NewsVoting> newsVoting;
     @JsonIgnore
-    @OneToMany(mappedBy = "news",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "news", cascade = CascadeType.REMOVE)
     private List<NewsComments> newsComments;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "categories_and_sub_categories_id")
+        private NewsCategoriesAndSubCategories categoriesAndSubCategories;
 
     public News() {
     }
@@ -46,7 +47,7 @@ public class News implements Serializable {
         this.newsId = newsId;
     }
 
-    public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, Date creationDTM, Date updationDTM, boolean isActive, NewsCategory newsCategory) {
+    public News(String newsHeading, String newsTitle, String newsDescription, String newsTeaser, Date creationDTM, Date updationDTM, boolean isActive) {
         this.newsHeading = newsHeading;
         this.newsTitle = newsTitle;
         this.newsDescription = newsDescription;
@@ -54,7 +55,6 @@ public class News implements Serializable {
         this.creationDTM = creationDTM;
         this.updationDTM = updationDTM;
         this.isActive = isActive;
-        this.newsCategory = newsCategory;
     }
 
     public long getNewsId() {
@@ -121,14 +121,6 @@ public class News implements Serializable {
         isActive = active;
     }
 
-    public NewsCategory getNewsCategory() {
-        return newsCategory;
-    }
-
-    public void setNewsCategory(NewsCategory newsCategory) {
-        this.newsCategory = newsCategory;
-    }
-
     public Set<NewsImage> getImage() {
         return image;
     }
@@ -153,6 +145,14 @@ public class News implements Serializable {
         this.newsComments = newsComments;
     }
 
+    public NewsCategoriesAndSubCategories getCategoriesAndSubCategories() {
+        return categoriesAndSubCategories;
+    }
+
+    public void setCategoriesAndSubCategories(NewsCategoriesAndSubCategories categoriesAndSubCategories) {
+        this.categoriesAndSubCategories = categoriesAndSubCategories;
+    }
+
     @Override
     public String toString() {
         return "News{" +
@@ -164,11 +164,11 @@ public class News implements Serializable {
                 ", creationDTM=" + creationDTM +
                 ", updationDTM=" + updationDTM +
                 ", isActive=" + isActive +
-                ", newsCategory=" + newsCategory +
                 ", image=" + image +
                 ", views=" + views +
                 ", newsVoting=" + newsVoting +
                 ", newsComments=" + newsComments +
+                ", categoriesAndSubCategories=" + categoriesAndSubCategories +
                 '}';
     }
 }

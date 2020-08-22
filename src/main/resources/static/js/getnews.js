@@ -16,19 +16,19 @@ GET: $(document).ready(function () {
             cache: false,
 
             success: function (data) {
-                    $('#getResultDiv').empty();
+                $('#getResultDiv').empty();
                 for (var i = 0; i < data.length; i++) {
-                        var user = "<a>" +data[i].newsHeading + "</a>" +" <br>"+"<p>" +data[i].newsDescription+"</p>";
+                    var user = "<a>" + data[i].newsHeading + "</a>" + " <br>" + "<p>" + data[i].newsDescription + "</p>";
 
-                        // $('#getResultDiv .liitem1 .liitem2').append(
-                        // bookName,author)
+                    // $('#getResultDiv .liitem1 .liitem2').append(
+                    // bookName,author)
 
-                        $("#getResultDiv").append(user);
+                    $("#getResultDiv").append(user);
 
 //						$('.listitem1').html(bookName);
 //						$('.listitem2').html(author);
-                    }
-                    console.log("Success: ", data);
+                }
+                console.log("Success: ", data);
 
             },
             error: function (e) {

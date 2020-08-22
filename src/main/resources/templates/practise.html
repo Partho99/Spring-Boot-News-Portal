@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        ul, #myUL {
+            list-style-type: none;
+        }
+
+        #myUL {
+            margin: 0;
+            padding: 0;
+        }
+
+        .caret {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
+
+        .caret::before {
+            content: "\25B6";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .caret-down::before {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -webkit-transform: rotate(90deg); /* Safari */
+        ' transform: rotate(90 deg);
+        }
+
+        .nested {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h2>Tree View</h2>
+<p>A tree view represents a hierarchical view of information, where each item can have a number of subitems.</p>
+<p>Click on the arrow(s) to open or close the tree branches.</p>
+
+
+<!--<select class="form-control"   id="exampleFormControlSelect1" th:field="*{newsCategory.CategoryId}">-->
+<!--    <option th:each="category :${newsCategory}" th:text="${category.categoryName}"-->
+<!--            th:value="${category.CategoryId}"></option>-->
+<!--</select>-->
+<ul id="myUL">
+    <li><span class="caret">Beverages</span>
+        <ul class="nested" th:each="category :${newsCategory}">
+            <li th:text="${category.categoryName}">Water</li>
+            <li>Coffee</li>
+            <li><span class="caret">Tea</span>
+                <ul class="nested">
+                    <li>Black Tea</li>
+                    <li>White Tea</li>
+                    <li><span class="caret">Green Tea</span>
+                        <ul class="nested">
+                            <li>Sencha</li>
+                            <li>Gyokuro</li>
+                            <li>Matcha</li>
+                            <li>Pi Lo Chun</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<form action="/action_page.php">
+    <label for="cars">Choose a car:</label>
+    <select name="cars" id="cars">
+        <optgroup label="Swedish Cars" th:each="category :${newsCategory}" th:text="${category.categoryName}">
+            <!--            <option th:text="${category.categoryName}">Volvo</option>-->
+            <option value="saab">Saab</option>
+        </optgroup>
+        <optgroup label="German Cars">
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </optgroup>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+
+<div class="container">
+    <h2>Modal Example</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Category</h4>
+                </div>
+                <div class="modal-body">
+
+                    <label for="cars">Choose a car:</label>
+
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option th:each="category :${newsCategory}" th:text="${category.categoryName}"
+                                th:value="${category.CategoryId}"></option>
+                    </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

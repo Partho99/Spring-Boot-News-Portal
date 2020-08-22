@@ -27,11 +27,11 @@ public class NewsRepositoryImpl implements NewsRepository {
     }
 
     @Override
-    public News findById(long id){
-            Query news = entityManager.createQuery("from News where newsId=:id and isActive=true", News.class);
-            news.setParameter("id", id);
-            News n = (News) news.getSingleResult();
-            return n;
+    public News findById(long id) {
+        Query news = entityManager.createQuery("from News where newsId=:id and isActive=true", News.class);
+        news.setParameter("id", id);
+        News n = (News) news.getSingleResult();
+        return n;
     }
 
     @Override
