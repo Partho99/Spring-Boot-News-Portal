@@ -378,7 +378,8 @@ public class NewsController {
 //        }
 //        return new ResponseEntity<>("Success",HttpStatus.OK);
 //    }
-
+//wefew
+//wefew
     @RequestMapping("/user/login")
     public ModelAndView showLogin() {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
